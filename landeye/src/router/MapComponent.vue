@@ -1,0 +1,344 @@
+<script>
+import 'ol/ol.css'
+import { Tile as TileLayer, Vector as VectorLayer } from "ol/layer";
+import { Vector as VectorSource } from "ol/source";
+import XYZ from 'ol/source/XYZ'
+import { Map, View } from 'ol'
+import { fromLonLat } from 'ol/proj'
+import 'ol/ol.css'
+import { defaults as defaultControls, FullScreen, ScaleLine } from "ol/control";
+import Feature from 'ol/Feature';
+import { Icon, Style, Fill, Stroke, Text } from "ol/style";
+import GeoJSON from "ol/format/GeoJSON"
+import landdata_geo from "../assets/landdata_geo.json";
+import {Point, Polygon, LinearRing, LineString} from "ol/geom";
+import { transform } from 'ol/proj';
+import { onMounted, ref, toRefs, watch, nextTick, getCurrentInstance } from "vue";
+import { getDistance } from 'ol/sphere'
+
+export default {
+  name: 'MapComponent',
+  props: {
+    msg: String,
+  },
+  setup(props, context) {
+    let { msg: receive } = toRefs(props);
+    var socket_data = ref('');
+    var curve = ref('');
+    var lonlat = ref('');
+    watch(receive, watchHandle);
+
+    let map
+    let source
+    let message = ref('')
+    const mapView = {
+      center: fromLonLat([120.29340255, 29.3125972]),
+      zoom: 16,
+      minZoom: 14,
+      maxZoom: 18
+    }
+
+    const mapUrl = 'http://localhost:9528/tiles/{z}/{x}/{y}.jpg';
+    let cameraVectorLayerSource = null;
+    let cameraVectorLayer = null;
+    let pointVectorLayerSource = null;
+    let pointVectorLayer = null;
+
+    onMounted(() => {
+      initMap();
+      nextTick(() => {
+          source = new VectorSource({
+          features: new GeoJSON().readFeatures(landdata_geo)
+        });
+        setInterval(() => {
+          //drawFanFeature();
+        }, 1000);
+        setInterval(() => {
+          //drawPoint();
+        }, 1000);
+        map.addEventListener('click', getCoordinates);
+      });
+    })
+    function watchHandle() {
+      socket_data.value = receive.value;
+      var obj = JSON.parse(socket_data.value);
+      if (obj.angle !== undefined) {
+        curve.value = obj;
+      }else if (obj.errorcode === 406 || obj.errorcode === 407) {
+        curve.value = obj;
+      }
+      else if (obj.packetscr == 4 ) {
+        lonlat.value = obj;
+      }
+      else if (obj.clearPoint == 1) {
+        lonlat.value = obj;
+      }
+    }
+    function sendMessage() {
+      context.emit('change', message);
+    }
+
+    function initMap() {
+      const cameraStyle = new Style({
+        image: new Icon({
+          src: '/images/camera.png',
+          anchor: [0.5, 1]
+        })
+      })
+      const cameraFeature = new Feature({
+        geometry: new Point(fromLonLat([120.29340255, 29.3125972]))
+      });
+      cameraFeature.setStyle(cameraStyle);
+
+      var Layers = [
+          new TileLayer({
+            title: "影像底图",
+            source: new XYZ({
+              url: mapUrl
+            }),
+          }),
+          new VectorLayer({
+            source: new VectorSource({
+              url: '/landdata_geo.json',
+              format: new GeoJSON()
+            }),
+            style: new Style({
+              fill: new Fill({
+                color: 'rgba(5, 95,23, 0.4)'
+              }),
+              stroke: new Stroke({
+                color: 'rgba(1, 220, 4)',
+                width: 2
+              })
+            })
+          })
+      ]
+
+      map = new Map({
+        layers: Layers,
+        view: new View(mapView),
+        target: 'map',
+        controls: defaultControls().extend([
+            new FullScreen(),
+            new ScaleLine({
+              units: 'metric'
+            })
+        ])
+      })
+
+      var cameraPointLayer = new VectorLayer({
+        source: new VectorSource()
+      });
+      map.addLayer(cameraPointLayer);
+      cameraPointLayer.getSource().addFeature(cameraFeature)
+
+      const vetorSource = new VectorSource({
+        features: []
+      });
+
+      if (source != undefined) {
+        this.fanFeature = this.source.getFeatures()[0];
+        vetorSource.addFeature(this.fanFeature);
+        this.pointFeature = this.source.getFeatures()[0];
+        vetorSource.addFeature(this.pointFeature);
+      }
+
+      const vectorLayer = new VectorLayer({
+        source: vetorSource,
+        updateWhileAnimating: true,
+        updateWhileInteracting: true
+      });
+      cameraVectorLayerSource = new VectorSource()
+      cameraVectorLayer = new VectorLayer({
+        source: cameraVectorLayerSource,
+        updateWhileAnimating: true,
+        updateWhileInteracting: true
+      })
+
+      map.addLayer(cameraVectorLayer);
+      map.addLayer(vectorLayer)
+
+      pointVectorLayerSource = new VectorSource()
+      pointVectorLayer = new VectorLayer({
+        source: pointVectorLayerSource,
+        updateWhileAnimating: true,
+        updateWhileInteracting: true
+      })
+
+      //drawFanFeature(curve);
+
+      //drawPoint(lonlat);
+
+      map.addLayer(pointVectorLayer)
+    }
+
+    function getCoordinates(event) {
+      let lonlat = transform(event.coordinate, 'EPSG:3857', 'EPSG:4326');
+      let lon = lonlat[0];
+      let lat = lonlat[1];
+
+      console.log([lon, lat])
+      let data = {
+        "packettype": 6,
+        "cameraid": 320000003,
+        "timestamp": Date.now(),
+        "zoomtype": 0,
+        "x": lon,
+        "y": lat,
+        "z": 1
+      }
+      message = JSON.stringify(data);
+      sendMessage();
+    }
+
+    function drawFanFeature() {
+      const lineStyle = new Style({
+        stroke: new Stroke({
+          color: 'rgba(255, 0, 0, 0.5)',
+          width: 2,
+        })
+      });
+
+      const fanStyle = new Style({
+        fill: new Fill({
+          color: 'rgba(32, 157, 230, 0.3)'
+        }),
+        stroke: new Stroke({
+          color: 'rgba(255, 205, 67)',
+          width: 2
+        }),
+        zIndex: 10000,
+        anchor: [0.5, 1]
+      });
+
+      if (curve != "") {
+        var params = curve
+        let angle = OrientToAngle(params.bearing)
+        const center = fromLonLat([120.29340255, 29.3125972])
+        let lineCoordinates = []
+        if (lonlat != "" && lonlat.coords !== undefined && lonlat.coords[0].x !== 0 && lonlat.coords[0].y !== 0) {
+          let targetPoint = fromLonLat([lonlat.coords[0].x, lonlat.coords[0].y])
+          lineCoordinates = [
+            center,
+            [targetPoint[0],targetPoint[1]], // 线段终点坐标（以圆心为起点，向上偏移半径长度）
+          ];
+        }
+        const lineFeature = new Feature(new LineString(lineCoordinates));
+        lineFeature.setStyle(lineStyle);
+        let metersPerUnit = map.getView().getProjection().getMetersPerUnit();
+        let circleRadius = params.range / metersPerUnit;
+        const circle = createRegularPolygonCurve(fromLonLat([120.29340255, 29.3125972]),  circleRadius, 100, params.angle, angle);
+        var fanFeature = new Feature(circle);
+        fanFeature.setStyle(fanStyle);
+        if(cameraVectorLayer.getSource().getFeatures().length>=2){
+          cameraVectorLayer.getSource().clear();
+        }
+        // 添加线段到图层
+        cameraVectorLayer.getSource().addFeature(lineFeature);
+        cameraVectorLayer.getSource().addFeature(fanFeature);
+      }
+    }
+
+    function OrientToAngle(orient) {
+      let tangle = -(orient - 90)
+      if (tangle <0.0){
+        while (tangle<0.0) tangle+=360;
+      }
+      return tangle
+    }
+
+    function drawPoint() {
+      if (lonlat != '') {
+        let x = lonlat.coords[0].x + 0;
+        let y = lonlat.coords[0].y + 0;
+        let h = lonlat.coords[0].h + 0;
+        let bearing = lonlat.bearing;
+        let range = lonlat.range;
+        x = Math.floor(x*100000000)/100000000;
+        y = Math.floor(y*100000000)/100000000;
+        h = Math.floor(h*100)/100;
+        bearing = Math.floor(bearing*100)/100;
+        range = Math.floor(range*100)/100;
+        const pointStyle = new Style({
+          image: new Icon({
+            src: 'point.png',
+            anchor: [0.5, 1]
+          }),
+          text: new Text({
+            font: 'normal 12px 黑体',
+            textAlign: 'center',
+            textBaseline: 'middle',
+            offsetY: -25,
+            offsetX: 0,
+            backgroundFill: new Stroke({
+              color: 'rgba(0, 0, 255, 0.7)'
+            }),
+            fill: new Fill({
+              color: 'rgba(236, 218, 20, 1)'
+            }),
+            padding: [5, 5, 5, 5],
+            text: '经度:' + x + ', 纬度:' + y + ', 高程:' + h +'\r\n' + '方位:' + bearing + ', 距离:' + range
+          })
+        });
+
+        const pointFeature = new Feature({
+          geometry: new Point(fromLonLat([lonlat.coords[0].x, lonlat.coords[0].y]))
+        });
+        pointFeature.setStyle(pointStyle);
+        if (pointVectorLayer.getSource().getFeatures().length >= 1) {
+          pointVectorLayer.getSource().clear();
+        }
+        pointVectorLayer.getSource().addFeature(pointFeature);
+      }
+    }
+
+    function diffDistance() {
+      const length = getDistance(start, end)
+      return length < 1000 ? Math.round(length) + '米' : Math.round(length / 1000) + '公里'
+    }
+
+    function createRegularPolygonCurve(origin, radius, sides, r, angle) {
+      let rotation = 360 - r;
+      radius = radius * 1.15;
+      let angleStep = Math.PI * ((1 / sides) - (1 / 2))
+      if (rotation) {
+        angleStep +=(rotation / 180) * Math.PI
+      }
+      let rotatedAngle, x, y
+      let points = []
+      for (let i = 0; i < sides; i++) {
+        let angleOffset = i * ((360 - rotation ) / 360)
+        rotatedAngle = angleStep + (angleOffset * 2 * Math.PI / sides)
+        x = origin[0] + (radius * Math.cos(rotatedAngle));
+        y = origin[1] + (radius * Math.sin(rotatedAngle));
+        points.push([x, y]);
+      }
+      if (rotation != 0) {
+        points.push(origin);
+      }
+      var ring = new LinearRing(points);
+      ring.rotate((angle+90+1/2*r)/ 57.3, origin);
+      let list = ring.getCoordinates();
+
+      return new Polygon([list]);
+    }
+
+    return {
+      socket_data,
+      curve,
+      lonlat,
+    }
+  },
+}
+</script>
+
+<template>
+  <div id="map"></div>
+</template>
+
+<style scoped>
+#map {
+  width: 100%;
+  height: 100%;
+}
+</style>
