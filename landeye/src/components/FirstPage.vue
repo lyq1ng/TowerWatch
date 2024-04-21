@@ -38,7 +38,7 @@ export default {
         //添加天地图web底图服务
         new TileLayer({
           source: new XYZ({
-            url: 'https://t6.tianditu.gov.cn/img_w/wmts?SERVICE=WMTS&REQUEST=GetTile&VERSION=1.0.0&LAYER=img&STYLE=default&TILEMATRIXSET=w&FORMAT=tiles&TILECOL={x}&TILEROW={y}&TILEMATRIX={z}&tk=22d8b67fcba918adc0a566e96d1587b3'
+            url: 'http://localhost:9528/tiles/{z}/{x}/{y}.png'
           })
         }),
       ]
@@ -63,9 +63,9 @@ export default {
         ],
         view: new View({
           projection: "EPSG:4326",
-          center: [120.29340255, 29.3125972],
+          center: [118.69402180854797, 24.784276672199237],
           zoom: 15,
-          minzoom:14,
+          minzoom:8,
           maxzoom:17
         }),
       });  
@@ -275,17 +275,18 @@ export default {
 }
 #map .ol-zoom {
   display: flex;
-  left: 1400px;
+  left: 1490px;
+  background-color: rgba(255,255,255,0);
 }
 #map .ol-zoom .ol-zoom-in {
   position:relative;
-  right:-86px;
+  right:10px;
   height: 44px;
   width: 44px;
+
 }
 #map .ol-zoom .ol-zoom-out {
-  position:absolute;
-  right:-140px;
+  position:relative;
   height: 44px;
   width: 44px;
 }

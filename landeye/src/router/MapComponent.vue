@@ -32,13 +32,13 @@ export default {
     let source
     let message = ref('')
     const mapView = {
-      center: fromLonLat([120.29340255, 29.3125972]),
+      center: fromLonLat([118.69402180854797, 24.784276672199237]),
       zoom: 16,
-      minZoom: 14,
+      minZoom: 8,
       maxZoom: 18
     }
 
-    const mapUrl = 'http://localhost:9528/tiles/{z}/{x}/{y}.jpg';
+    const mapUrl = 'http://localhost:9528/tiles/{z}/{x}/{y}.png';
     let cameraVectorLayerSource = null;
     let cameraVectorLayer = null;
     let pointVectorLayerSource = null;
