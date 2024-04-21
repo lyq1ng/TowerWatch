@@ -64,7 +64,7 @@ export default {
         view: new View({
           projection: "EPSG:4326",
           center: [118.69402180854797, 24.784276672199237],
-          zoom: 15,
+          zoom: 16,
           minzoom:8,
           maxzoom:17
         }),
@@ -275,18 +275,19 @@ export default {
 }
 #map .ol-zoom {
   display: flex;
-  left: 1490px;
+  right: 100px;
   background-color: rgba(255,255,255,0);
 }
 #map .ol-zoom .ol-zoom-in {
-  position:relative;
-  right:10px;
+  position: absolute;
+  right:60px;
   height: 44px;
   width: 44px;
 
 }
 #map .ol-zoom .ol-zoom-out {
-  position:relative;
+  position: absolute;
+  right: 110px;
   height: 44px;
   width: 44px;
 }
