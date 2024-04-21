@@ -94,8 +94,9 @@
     height:100vh;
   }
   html, body, #app {
-    height: 100%;
-    margin: 0;
+    height: 100vh;
+    width: 100vw;
+    overflow-x: hidden;
   }
   .content {
     display:flex;
