@@ -6,7 +6,7 @@
           autoplay
           muted
           @loadedmetadata="handleVideoLoad"
-          style="width:100%;object-fit:fill;margin: 0 auto;display: block;position: absolute;top: 50%;transform: translateY(-50%);">
+          style="width:100%;height: 100%;object-fit:fill;margin: 0 auto;display: block;position: absolute;top: 50%;transform: translateY(-50%);">
       </video>
       <a-button type="default" id="Switch" @click="toggle">切换</a-button>
       <a-button type="default" id="Capture" @click="captureScreenshot">抓图</a-button>
@@ -84,7 +84,7 @@ export default {
 
         this.VideoplayResize()
         window.addEventListener('resize', this.VideoplayResize);
-        this.play('http://10.10.9.96:10011/live?port=21935&app=live&stream=snapshot');
+        this.play('http://192.168.1.102:85/live/tvstream.flv');
     },
     methods: {
       play(urls) {
@@ -768,7 +768,7 @@ export default {
 .player {
     position: relative;
     height: 100% !important;
-    width: 100%;
+    width: 100% !important;
     //margin: auto;
     z-index: 0;
     //padding-bottom: 56.25%;

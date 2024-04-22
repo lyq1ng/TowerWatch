@@ -296,6 +296,10 @@ export default {
   justify-content: space-between;
   align-items: center;
 }
+.btn .ant-btn {
+  width: 50px;
+  height: 20px;
+}
 .content {
   display: flex;
   height: 88%;
