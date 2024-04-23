@@ -1,5 +1,4 @@
 <template>
-  <div class="echarts-container" ref="echartsRef" style="width: 900px; height: 320px;">
     <div class="Container">
       <span class="j_1"></span>
       <span class="j_2"></span>
@@ -21,7 +20,6 @@
         </li>
      </ul>
     </div>
-  </div>
 </template>
 
 <script>
@@ -37,7 +35,6 @@ import * as echarts from 'echarts';*/
   border: #ffffff solid 2px;
   background: linear-gradient(rgba(183,245,222,0.5),rgba(128,128,128,0));
   box-sizing: border-box;
-  margin-left:20px;
 }
 .zpsl-box li::after{
   margin-top: 1.2rem;

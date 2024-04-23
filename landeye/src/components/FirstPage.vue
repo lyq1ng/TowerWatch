@@ -63,7 +63,7 @@ export default {
         ],
         view: new View({
           projection: "EPSG:4326",
-          center: [118.69402180854797, 24.784276672199237],
+          center: [118.69402180854797, 24.764276672199237],
           zoom: 16,
           minzoom:8,
           maxzoom:17
@@ -266,35 +266,32 @@ export default {
 
 <style>
 #map {
-  margin-top:12px;
-  width:1750px;
-  height: 725px;
+  width:100%;
+  height: 100%;
   position: relative;
-  margin-bottom:12px
-
 }
 #map .ol-zoom {
   display: flex;
-  right: 100px;
+  right: 7%;
   background-color: rgba(255,255,255,0);
 }
 #map .ol-zoom .ol-zoom-in {
   position: absolute;
-  right:60px;
+  right: 4%;
   height: 44px;
   width: 44px;
 
 }
 #map .ol-zoom .ol-zoom-out {
   position: absolute;
-  right: 110px;
+  right: 8%;
   height: 44px;
   width: 44px;
 }
 .btn-group {
   margin-top: 11px;
   position: absolute;
-  right: 30px;
+  right: 2%;
   z-index: 1000;
 }
 .btn {
@@ -316,8 +313,8 @@ export default {
   width: 200px;
   background-color: #f2efef;
   position: absolute;
-  bottom: 10px;
-  right: 10px;
+  bottom: 1%;
+  right: 1%;
   opacity: 70%;
   z-index: 1000;
   flex-direction: column;

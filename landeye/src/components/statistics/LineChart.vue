@@ -174,7 +174,7 @@ export default {
   display: flex;
   flex-direction: column;
    position:relative;
-   width: 610px;
+   width: 640px;
    height: 320px;
    border: #ffffff solid 2px;
    background: linear-gradient(rgba(183,245,222,0.5),rgba(128,128,128,0));

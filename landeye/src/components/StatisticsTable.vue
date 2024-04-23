@@ -30,20 +30,21 @@
   
   <style>
   .container {
-    width:85%;
-    height:100%;
+    width: 100%;
+    height: 100%;
     padding-top:10px;
   }
   .container1 {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    margin-right:20px;
+    margin:0 20px 0 20px;
   }
   .container2 {
     display: flex;
     align-items: center;
     justify-content: space-between;
+    margin:0 20px 0 20px;
   }
 
   </style>

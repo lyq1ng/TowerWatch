@@ -1,7 +1,7 @@
 <template>
   <div class="common-layout">
     <el-container class="mainbackground">
-      <el-header>
+      <el-header class="header">
           <div id="mobile-bar" :class="{ 'bx bx-x': isMenuOpen, 'bx bx-menu': !isMenuOpen }"   @click="toggleMenu">
           </div>
           <div class="menu-bar" :class="{ open: isMenuOpen }">
@@ -35,7 +35,7 @@
         <div class='logo'>塔视守望</div>
       </div>
       </el-header>
-      <el-main>
+      <el-main class="main">
         <div class='content'>
         <router-view></router-view>
         </div>
@@ -75,6 +75,10 @@
 </script>
 
 <style>
+  .common-layout {
+    width: 100vw;
+    height: 100vh;
+  }
   .el-header {
     height:45px;
     z-index:2;
@@ -89,23 +93,32 @@
     width:320px;
   }
   .mainbackground {
-    background-image: linear-gradient(120deg, #d4fc79 0%, #96e6a1 100%);
-    //background-color: #333333;
-    height:100vh;
+    //background-image: linear-gradient(120deg, #d4fc79 0%, #96e6a1 100%);
+    background-color: rgba(203, 207, 137, 0.5);
+    height:100%;
   }
   html, body, #app {
     height: 100vh;
     width: 100vw;
     overflow-x: hidden;
   }
+  .header {
+    height: 10%;
+    padding: 0;
+  }
+  .main {
+    height: 90%;
+    padding: 0;
+  }
   .content {
     display:flex;
-    background-color:rgba(185, 184, 184, 0.8);
+    background-color:rgba(233, 237, 214, 0.8);
     justify-content:center;
     position:relative;
-    width:100%;
+    height: 100%;
+    width:95%;
     border-radius:10px;
-    margin-top:10px;
+    margin: auto;
     z-index:1;
   }
   .el-icon {
