@@ -14,6 +14,8 @@ export default {
 
     function changeWsMsg(data) {
       msg.value = data
+      console.log('hello')
+      console.log(data)
     }
 
     return {

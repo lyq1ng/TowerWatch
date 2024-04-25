@@ -23,7 +23,7 @@ export default {
     let preFilteredCoords = []
     let currentFilteredCoords = []
     let { msg } = toRefs(props)
-    const url = "ws://10.10.9.96:9999"; // WebSocket服务器的地址
+    const url = "ws://192.168.21.4:58888"; // WebSocket服务器的地址
     const socket = new WebSocket(url);
     var c_id = 320000003
 
@@ -122,10 +122,12 @@ export default {
     }
 
     function handleMessage(event) {
-      // console.log("message:", event.data);
+      console.log("------------------------------------------")
+      console.log("message:", event.data);
+      console.log("------------------------------------------")
       // 如果接收到errorcode 为406/407 表示摄像头倾斜角为0或负数/坐标不可获得，则清空当前坐标值
       if (JSON.parse(event.data).errorcode === 406 || JSON.parse(event.data).errorcode === 407){
-        console.log("406/407 error::", event.data);
+        //console.log("406/407 error::", event.data);
         // event.data.lands = [];
         let dd = JSON.parse(event.data);
         let land = []
