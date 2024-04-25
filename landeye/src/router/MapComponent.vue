@@ -38,7 +38,7 @@ export default {
       maxZoom: 18
     }
 
-    const mapUrl = 'http://localhost:9528/tiles/{z}/{x}/{y}.png';
+    const mapUrl = 'http://localhost:8081/tiles/{z}/{x}/{y}.png';
     let cameraVectorLayerSource = null;
     let cameraVectorLayer = null;
     let pointVectorLayerSource = null;

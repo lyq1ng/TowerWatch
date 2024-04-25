@@ -1,5 +1,7 @@
-<script>
+<script lang="ts">
 import {ref, reactive, watch, getCurrentInstance, onUnmounted, toRefs, onMounted} from 'vue';
+import {AlarmData2, WarnMsgCor} from "../api/WarningMessage";
+import axios from 'axios';
 export default {
   props: {
     msg: String
@@ -9,20 +11,12 @@ export default {
     const pageSize = 5; // 每页显示条目数
     const totalItems = ref(6); // 总条目数
     //const dataList = reactive([...Array(100).keys()].map(i => `Item ${i + 1}`));
-    const dataList = reactive([
-      { id: 1, type: 'Type A', level: 'High', date: '04-19' },
-      { id: 2, type: 'Type B', level: 'Medium', date: '04-20' },
-      { id: 1, type: 'Type A', level: 'High', date: '04-19' },
-      { id: 2, type: 'Type B', level: 'Medium', date: '04-20' },
-      { id: 1, type: 'Type A', level: 'High', date: '04-19' },
-      { id: 2, type: 'Type B', level: 'Medium', date: '04-20' },
-      // 其他数据项
-    ])
+    let dataList = reactive<AlarmData2[]>([])
     const dataLoaded = ref(false);
 
     const currentData = ref([]);
-    const coordinate = ref([120.34683,30.36436])
-    const cameraid = ref('001')
+    let coordinate = reactive<WarnMsgCor[]>([]);
+    const cameraid = ref('001');
     const landtype = ref('002')
     const warningrecord = ref('url')
 
@@ -33,10 +27,25 @@ export default {
     const socket = new WebSocket(url);
     var c_id = 320000003
 
-    onMounted(() => {
-      const { appContext : { config: { globalProperties } } } = getCurrentInstance()
-      console.log(globalProperties.$websocketMsg)
-    })
+
+    onMounted(async () => {
+      try {
+        const { appContext: { config: { globalProperties } } } = getCurrentInstance();
+        console.log(globalProperties.$websocketMsg);
+        //获取告警信息栏左侧列表
+        const response = await axios.get<AlarmData2[]>('http://localhost:3050/api/WarnMsg');
+        dataList.splice(0, dataList.length, ...response.data);
+        console.log('response',response.data);
+        console.log('datalist',dataList)
+        //获取告警信息栏右侧信息
+        /*const response1 = await axios.get<WarnMsgCor[]>('http://localhost:3050/api/WarnMsgRight');
+        coordinate.splice(0, coordinate.length, ...response1.data);
+        console.log('response1',response1.data)*/
+      } catch (error) {
+        console.error('Error stack:', error.stack);
+        console.error('Error:',error);
+      }
+    });
     onUnmounted(() => {
       socket.close();
     })
@@ -106,9 +115,10 @@ export default {
 
     function handleItemClick(item) {
       cameraid.value = item.id;
-      coordinate.value = item.level;
+      coordinate.splice(0, coordinate.length, item.cenlon, item.cenlat);
       landtype.value = item.type;
       warningrecord.value = item.date;
+      console.log('coor',coordinate);
     }
 
     function handleMessage(event) {
@@ -201,6 +211,7 @@ export default {
       turnUp,
       zoomIn,
       zoomOut,
+      dataList
     };
   },
 };
@@ -261,9 +272,9 @@ export default {
             @click="handleItemClick(item)"
         >
         <div class="list-item-column">{{ item.id }}</div>
-        <div class="list-item-column">{{ item.type }}</div>
-        <div class="list-item-column">{{ item.level }}</div>
-        <div class="list-item-column">{{ item.date }}</div>
+        <div class="list-item-column">{{ item.warnmsg_type_id }}</div>
+        <div class="list-item-column">{{ item.warnlevel }}</div>
+        <div class="list-item-column">{{ item.warn_time }}</div>
         </a-list-item>
       </template>
     </a-list>
@@ -276,7 +287,7 @@ export default {
     />
   </div>
     <div class="message">
-    <h>经纬度坐标: {{ coordinate }} </h>
+    <h>经纬度坐标: {{ coordinate[0] }} , {{ coordinate[1] }}</h>
     <br>
     <h>摄像头id： {{ cameraid }} </h>
     <br>
