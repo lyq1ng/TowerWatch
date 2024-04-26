@@ -3,7 +3,7 @@ import express from 'express';
 import pg from 'pg';
 import cors from 'cors';
 import mysql from 'mysql';
-
+//创建express实例
 const app = express();
 const { Pool } = pg;
 // 跨域处理
@@ -22,7 +22,7 @@ const pool = new Pool({
 app.get('/api/alarm', async (req, res) => {
     try {
         const client = await pool.connect();
-        const result = await client.query('SELECT * FROM warnmsg'); // 假设你的表名为 alarm_data
+        const result = await client.query('SELECT * FROM warnmsg');
         const dataList = result.rows;
         client.release();
         res.json(dataList);

@@ -1,24 +1,24 @@
 <script lang="ts">
 import {ref, reactive, watch, getCurrentInstance, onUnmounted, toRefs, onMounted} from 'vue';
-import {AlarmData2, WarnMsgCor} from "../api/WarningMessage";
+import {AlarmData2, WarnMsgCor} from "../api/WarningMessage";//引入对象类型定义
 import axios from 'axios';
 export default {
   props: {
     msg: String
   },
   setup(props, { emit }) {
-    const currentPage = ref(1);
+    const currentPage = ref(1); //默认当前显示告警信息第一页
     const pageSize = 5; // 每页显示条目数
     const totalItems = ref(6); // 总条目数
     //const dataList = reactive([...Array(100).keys()].map(i => `Item ${i + 1}`));
-    let dataList = reactive<AlarmData2[]>([])
-    const dataLoaded = ref(false);
+    let dataList = reactive<AlarmData2[]>([])//初始化告警信息列表，属性由类型定义规定
+    const dataLoaded = ref(false);//若没有告警信息，则不显示
 
-    const currentData = ref([]);
-    let coordinate = reactive<WarnMsgCor[]>([]);
-    const cameraid = ref('001');
-    const landtype = ref('002')
-    const warningrecord = ref('url')
+    const currentData = ref([]);//初始化当前页的数据
+    let coordinate = reactive<WarnMsgCor[]>([]);//初始化经纬度
+    const cameraid = ref();//初始化摄像头id
+    const landtype = ref()//初始化用地类型
+    const warningrecord = ref()//初始化告警图片
 
     let preFilteredCoords = []
     let currentFilteredCoords = []
@@ -35,8 +35,9 @@ export default {
         //获取告警信息栏左侧列表
         const response = await axios.get<AlarmData2[]>('http://localhost:3050/api/WarnMsg');
         dataList.splice(0, dataList.length, ...response.data);
-        console.log('response',response.data);
-        console.log('datalist',dataList)
+        //console.log('response',response.data);
+        console.log('datalist',dataList);
+
         //获取告警信息栏右侧信息
         /*const response1 = await axios.get<WarnMsgCor[]>('http://localhost:3050/api/WarnMsgRight');
         coordinate.splice(0, coordinate.length, ...response1.data);
@@ -45,6 +46,7 @@ export default {
         console.error('Error stack:', error.stack);
         console.error('Error:',error);
       }
+      fetchdata()
     });
     onUnmounted(() => {
       socket.close();
@@ -54,7 +56,7 @@ export default {
       // 发送登录请求
       socket.send(JSON.stringify({
         "packettype": 1, "cameraid": c_id, "timestamp": new Date(),
-        "name": "Camera Test.", "user": "admin", "password": "ecdis"
+        "name": "Camera Test.", "user": "admin", "password": "a8888888"
       }));
       sleep(100);
       socket.send(JSON.stringify({
@@ -93,25 +95,21 @@ export default {
       preFilteredCoords = currentFilteredCoords;
     });
     socket.onmessage = handleMessage;
-    // 计算当前页的数据
-    const computeCurrentData = () => {
+    const fetchdata  = () => {
       const startIndex = (currentPage.value - 1) * pageSize;
       const endIndex = currentPage.value * pageSize;
       currentData.value = dataList.slice(startIndex, endIndex);
       dataLoaded.value = true;
     };
-
+    // 计算当前页的数据
     // 监听页码变化
     watch(currentPage, () => {
-      computeCurrentData();
+      fetchdata();
     });
-
     // 处理页码变化事件
     const handlePageChange = (page) => {
       currentPage.value = page;
     };
-
-    computeCurrentData(); // 初始化加载第一页的数据
 
     function handleItemClick(item) {
       cameraid.value = item.id;
@@ -122,12 +120,10 @@ export default {
     }
 
     function handleMessage(event) {
-      console.log("------------------------------------------")
-      console.log("message:", event.data);
-      console.log("------------------------------------------")
+      // console.log("message:", event.data);
       // 如果接收到errorcode 为406/407 表示摄像头倾斜角为0或负数/坐标不可获得，则清空当前坐标值
       if (JSON.parse(event.data).errorcode === 406 || JSON.parse(event.data).errorcode === 407){
-        //console.log("406/407 error::", event.data);
+        console.log("406/407 error::", event.data);
         // event.data.lands = [];
         let dd = JSON.parse(event.data);
         let land = []
@@ -350,8 +346,8 @@ span {
 }
 
 .pagination {
-  bottom: 0px;
-  right: 0px;
+  bottom: 0;
+  right: 0;
   position: absolute;
 }
 
