@@ -1,7 +1,7 @@
 <script>
 import MapComponent from "./MapComponent.vue";
 import WarningMessage from "./WarningMessage.vue";
-import {ref} from "vue";
+import {ref,provide} from "vue";
 import PolygonsDisplay from "./PolygonsDisplay.vue";
 export default {
   components:{
@@ -10,8 +10,9 @@ export default {
     WarningMessage,
   },
   setup(){
-    let msg = ref('')
-
+   let msg = ref('')
+   let coordinate = ref([118.69402180854797, 24.784276672199237]);
+    provide('coordinate', coordinate);
     function changeWsMsg(data) {
       msg.value = data
       console.log('hello')
@@ -21,8 +22,15 @@ export default {
     return {
       msg,
       changeWsMsg,
+      coordinate
     }
-  }
+  },
+  methods: {
+    // 更新coordinate数组的方法
+    handleUpdateCoordinate(newCoordinate) {
+      this.coordinate = newCoordinate;
+    },
+  },
 }
 </script>
 
@@ -37,11 +45,11 @@ export default {
         <PolygonsDisplay :msg="msg" @change="changeWsMsg"/>
       </div>
       <div class="left-bottom">
-        <WarningMessage :msg="msg" @change="changeWsMsg"/>
+        <WarningMessage :msg="msg" @change="changeWsMsg" :coordinate="coordinate" @updateCoordinate="handleUpdateCoordinate"/>
       </div>
     </div>
     <div class="right">
-      <MapComponent :msg="msg" @change="changeWsMsg"/>
+      <MapComponent :msg="msg" @change="changeWsMsg" :coordinate="coordinate"/>
     </div>
   </div>
   </div>

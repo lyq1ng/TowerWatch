@@ -1,5 +1,5 @@
 <script>
-import 'ol/ol.css'
+
 import { Tile as TileLayer, Vector as VectorLayer } from "ol/layer";
 import { Vector as VectorSource } from "ol/source";
 import XYZ from 'ol/source/XYZ'
@@ -13,8 +13,10 @@ import GeoJSON from "ol/format/GeoJSON"
 import landdata_geo from "../assets/landdata_geo.json";
 import {Point, Polygon, LinearRing, LineString} from "ol/geom";
 import { transform } from 'ol/proj';
-import { onMounted, ref, toRefs, watch, nextTick, getCurrentInstance } from "vue";
+import {onMounted, ref, toRefs, watch, nextTick, getCurrentInstance, inject} from "vue";
 import { getDistance } from 'ol/sphere'
+import axios from "axios";
+//import {AlarmData2} from "../api/WarningMessage.js";
 
 export default {
   name: 'MapComponent',
@@ -38,16 +40,38 @@ export default {
       maxZoom: 18
     }
 
-    const mapUrl = 'http://localhost:8081/tiles/{z}/{x}/{y}.png';
+    const mapUrl = 'http://120.37.123.14:58090/tiles/{z}/{x}/{y}.png';
     let cameraVectorLayerSource = null;
     let cameraVectorLayer = null;
     let pointVectorLayerSource = null;
     let pointVectorLayer = null;
+    let WarnPoint = [];
+    const coordinate = inject('coordinate');
+    var warnPointVectorSource = new VectorSource(); // 创建一个空的矢量源用于警告点
+    var warnPointVectorLayer = new VectorLayer({ // 创建矢量图层使用上述矢量源
+      source: warnPointVectorSource,
+      style: new Style({
+        image: new Icon({
+          anchor: [0.5, 1],
+          scale: 1,
+          src: './public/img/warning.png' // 图标路径，根据需要调整
+        })
+      })
+    });
+    const defaultCoordinate = [118.712013, 24.783697]
+    // 创建或获取矢量源和图层
+    //let centerPointVectorSource = new VectorSource();
+    /*let centerPointVectorLayer = new VectorLayer({
+      source: centerPointVectorSource,
+      style: createCenterIconStyle() // 应用中心点图标样式
+    });*/
 
-    onMounted(() => {
+    onMounted(  () => {
+      //console.log('get',coordinate)
       initMap();
+      fetchData();
       nextTick(() => {
-          source = new VectorSource({
+        source = new VectorSource({
           features: new GeoJSON().readFeatures(landdata_geo)
         });
         setInterval(() => {
@@ -58,7 +82,14 @@ export default {
         }, 1000);
         map.addEventListener('click', getCoordinates);
       });
-    })
+    });
+
+    // 监听 coordinate 的变化
+    watch(coordinate, (newValue) => {
+      console.log('Coordinate updated:', newValue);
+      updateMapCenter(newValue);
+    }, { immediate: true });
+
     function watchHandle() {
       socket_data.value = receive.value;
       var obj = JSON.parse(socket_data.value);
@@ -79,97 +110,57 @@ export default {
     }
 
     function initMap() {
-      const cameraStyle = new Style({
-        image: new Icon({
-          src: '/images/camera.png',
-          anchor: [0.5, 1]
-        })
-      })
-      const cameraFeature = new Feature({
-        geometry: new Point(fromLonLat([120.29340255, 29.3125972]))
-      });
-      cameraFeature.setStyle(cameraStyle);
-
+      //const initialCenter = coordinate.length ? fromLonLat([coordinate[0], coordinate[1]]) : fromLonLat(defaultCoordinate);
+      //warnPointVectorSource.clear();
       var Layers = [
-          new TileLayer({
-            title: "影像底图",
-            source: new XYZ({
-              url: mapUrl
-            }),
+        new TileLayer({
+          title: "影像底图",
+          source: new XYZ({
+            url: mapUrl
           }),
-          new VectorLayer({
-            source: new VectorSource({
-              url: '/landdata_geo.json',
-              format: new GeoJSON()
+        }),
+        new VectorLayer({
+          source: new VectorSource({
+            url: '/landdata_geo.json',
+            format: new GeoJSON()
+          }),
+          style: new Style({
+            fill: new Fill({
+              color: 'rgba(5, 95, 23, 0.4)'
             }),
-            style: new Style({
-              fill: new Fill({
-                color: 'rgba(5, 95,23, 0.4)'
-              }),
-              stroke: new Stroke({
-                color: 'rgba(1, 220, 4)',
-                width: 2
-              })
+            stroke: new Stroke({
+              color: 'rgba(1, 220, 4)',
+              width: 2
             })
           })
+        }),//地块GeoJson
+        warnPointVectorLayer,// 添加警告点图层
       ]
-
       map = new Map({
         layers: Layers,
-        view: new View(mapView),
+        view: new View({
+          center: fromLonLat(defaultCoordinate),
+          zoom: 16,
+          minZoom: 8,
+          maxZoom: 18
+        }),
         target: 'map',
         controls: defaultControls().extend([
-            new FullScreen(),
-            new ScaleLine({
-              units: 'metric'
-            })
+          new FullScreen(),
+          new ScaleLine({
+            units: 'metric'
+          })
         ])
       })
-
-      var cameraPointLayer = new VectorLayer({
-        source: new VectorSource()
-      });
-      map.addLayer(cameraPointLayer);
-      cameraPointLayer.getSource().addFeature(cameraFeature)
-
-      const vetorSource = new VectorSource({
-        features: []
-      });
-
-      if (source != undefined) {
-        this.fanFeature = this.source.getFeatures()[0];
-        vetorSource.addFeature(this.fanFeature);
-        this.pointFeature = this.source.getFeatures()[0];
-        vetorSource.addFeature(this.pointFeature);
-      }
-
-      const vectorLayer = new VectorLayer({
-        source: vetorSource,
-        updateWhileAnimating: true,
-        updateWhileInteracting: true
-      });
-      cameraVectorLayerSource = new VectorSource()
-      cameraVectorLayer = new VectorLayer({
-        source: cameraVectorLayerSource,
-        updateWhileAnimating: true,
-        updateWhileInteracting: true
-      })
-
-      map.addLayer(cameraVectorLayer);
-      map.addLayer(vectorLayer)
-
-      pointVectorLayerSource = new VectorSource()
-      pointVectorLayer = new VectorLayer({
-        source: pointVectorLayerSource,
-        updateWhileAnimating: true,
-        updateWhileInteracting: true
-      })
-
       //drawFanFeature(curve);
-
       //drawPoint(lonlat);
+    }
 
-      map.addLayer(pointVectorLayer)
+    function updateMapCenter(newCenter) {
+      if (map && newCenter) {
+        map.getView().setCenter(fromLonLat(newCenter));
+        map.getView().animate({center: fromLonLat(newCenter), duration: 500});
+      }
     }
 
     function getCoordinates(event) {
@@ -323,10 +314,42 @@ export default {
       return new Polygon([list]);
     }
 
+    async function fetchData() {
+      try {
+        const response = await axios.get('http://8.148.10.46:3050/api/MapComp');
+        WarnPoint.splice(0, WarnPoint.length, ...response.data);
+        console.log('WarnPoint',WarnPoint);
+        WarnPoint.forEach(point => {
+          const iconFeature = new Feature({
+            geometry: new Point(fromLonLat([point.cenlon, point.cenlat]))
+          });
+          iconFeature.setStyle(createIconStyle());
+          warnPointVectorSource.addFeature(iconFeature)
+        });
+      } catch (error) {
+        console.error('Error fetching data:', error);
+      }
+    }
+
+    function createIconStyle() {
+      return new Style({
+        image: new Icon({
+          anchor: [0.5, 1], // 图标的锚点设置为底部中心
+          anchorXUnits: 'fraction',
+          anchorYUnits: 'fraction',
+          src: './public/img/warning.png', // 图标的URL，确保正确指向图标文件
+          scale: 1 // 根据图标的实际大小调整比例
+        })
+      });
+    }
+    /*watch(coordinate, (newValue) => {
+      updateMapCenter(newValue);
+    }, { immediate: true });*/
     return {
       socket_data,
       curve,
       lonlat,
+      map
     }
   },
 }

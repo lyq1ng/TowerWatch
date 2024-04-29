@@ -1,11 +1,6 @@
 import {LineStringGeometryBatch} from "ol/render/webgl/MixedGeometryBatch";
 
-export interface AlarmData {
-    id: number;
-    type: string;
-    level: string;
-    date: string;
-}
+
 
 export interface AlarmData2 {
     id:number;
@@ -20,6 +15,7 @@ export interface WarnMsgCor{
     cenlon:string;
     cenlat:string;
 }
+
 
 /*export interface CameraList{
     id:number;

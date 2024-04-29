@@ -43,7 +43,7 @@ export default {
   },
   methods: {
     fetchData() {
-      axios.get('http://localhost:3050/api/CameraList')
+      axios.get('http://8.148.10.46:3050/api/CameraList')
           .then((response) => {
             this.data = response.data;
             console.log('response',response)

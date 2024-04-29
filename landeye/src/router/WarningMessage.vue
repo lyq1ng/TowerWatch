@@ -1,5 +1,5 @@
 <script lang="ts">
-import {ref, reactive, watch, getCurrentInstance, onUnmounted, toRefs, onMounted} from 'vue';
+import {ref, reactive, watch, getCurrentInstance, onUnmounted, toRefs, onMounted, inject} from 'vue';
 import {AlarmData2, WarnMsgCor} from "../api/WarningMessage";//引入对象类型定义
 import axios from 'axios';
 export default {
@@ -9,13 +9,13 @@ export default {
   setup(props, { emit }) {
     const currentPage = ref(1); //默认当前显示告警信息第一页
     const pageSize = 5; // 每页显示条目数
-    const totalItems = ref(6); // 总条目数
+    const totalItems = ref(20); // 总条目数
     //const dataList = reactive([...Array(100).keys()].map(i => `Item ${i + 1}`));
-    let dataList = reactive<AlarmData2[]>([])//初始化告警信息列表，属性由类型定义规定
+    let dataList =[]//初始化告警信息列表，属性由类型定义规定
     const dataLoaded = ref(false);//若没有告警信息，则不显示
-
+    const coordinate = inject('coordinate');
     const currentData = ref([]);//初始化当前页的数据
-    let coordinate = reactive<WarnMsgCor[]>([]);//初始化经纬度
+
     const cameraid = ref();//初始化摄像头id
     const landtype = ref()//初始化用地类型
     const warningrecord = ref()//初始化告警图片
@@ -33,15 +33,10 @@ export default {
         const { appContext: { config: { globalProperties } } } = getCurrentInstance();
         console.log(globalProperties.$websocketMsg);
         //获取告警信息栏左侧列表
-        const response = await axios.get<AlarmData2[]>('http://localhost:3050/api/WarnMsg');
+        const response = await axios.get<AlarmData2[]>('http://8.148.10.46:3050/api/WarnMsg');
         dataList.splice(0, dataList.length, ...response.data);
         //console.log('response',response.data);
         console.log('datalist',dataList);
-
-        //获取告警信息栏右侧信息
-        /*const response1 = await axios.get<WarnMsgCor[]>('http://localhost:3050/api/WarnMsgRight');
-        coordinate.splice(0, coordinate.length, ...response1.data);
-        console.log('response1',response1.data)*/
       } catch (error) {
         console.error('Error stack:', error.stack);
         console.error('Error:',error);
@@ -113,7 +108,9 @@ export default {
 
     function handleItemClick(item) {
       cameraid.value = item.id;
-      coordinate.splice(0, coordinate.length, item.cenlon, item.cenlat);
+      //coordinate.value.splice(0, coordinate.value.length); // 删除所有现有元素
+      //coordinate.value.push(item.cenlon, item.cenlat);
+      coordinate.value = [item.cenlon, item.cenlat];
       landtype.value = item.type;
       warningrecord.value = item.date;
       console.log('coor',coordinate);
@@ -253,7 +250,6 @@ export default {
       <div style="display: flex;justify-content: space-between;">
         <span style="margin-left: 16px;">id</span>
         <span>类型</span>
-        <span>级别</span>
         <span>日期</span>
       </div>
     </div>
@@ -271,7 +267,6 @@ export default {
         >
         <div class="list-item-column">{{ item.id }}</div>
         <div class="list-item-column">{{ item.warnmsg_type_id }}</div>
-        <div class="list-item-column">{{ item.warnlevel }}</div>
         <div class="list-item-column">{{ item.warn_time }}</div>
         </a-list-item>
       </template>

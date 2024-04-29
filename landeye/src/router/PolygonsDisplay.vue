@@ -84,7 +84,7 @@ export default {
 
         this.VideoplayResize()
         window.addEventListener('resize', this.VideoplayResize);
-        this.play('http://192.168.1.102:85/live/tvstream.flv');
+        this.play('http://192.168.1.104:85/live/tvstream.flv');
     },
     methods: {
       play(urls) {

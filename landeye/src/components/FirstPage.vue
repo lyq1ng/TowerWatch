@@ -18,11 +18,11 @@ export default {
     let baseLayer = [];
     let addLayer = [];
     const points = [
-      [120.29340255, 29.3125972],
-      [120.29440255, 29.3155972],
-      [120.29540255, 29.3135972],
-      [120.29640255, 29.3145972],
-      [120.29240255, 29.3115972]
+      [118.7071110000,24.7777770000],
+      [118.7124350000,24.7712340000],
+      [118.7223450000,24.7693520000],
+      [118.7134890000,24.7812340000],
+      //[118.7311111000,24.7843210000],
     ]
     const cameraSource = new VectorSource();
     const warningSource = new VectorSource();
@@ -38,7 +38,7 @@ export default {
         //添加天地图web底图服务
         new TileLayer({
           source: new XYZ({
-            url: 'http://localhost:9528/tiles/{z}/{x}/{y}.png'
+            url: 'http://120.37.123.14:58090/tiles/{z}/{x}/{y}.png'
           })
         }),
       ]
