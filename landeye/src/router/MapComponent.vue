@@ -30,6 +30,13 @@ export default {
     var lonlat = ref('');
     watch(receive, watchHandle);
 
+    const Points = [
+      [118.7071110000,24.7777770000],
+      [118.7124350000,24.7712340000],
+      [118.7223450000,24.7693520000],
+      [118.7134890000,24.7812340000],
+      //[118.7311111000,24.7843210000],
+    ]
     let map
     let source
     let message = ref('')
@@ -54,11 +61,33 @@ export default {
         image: new Icon({
           anchor: [0.5, 1],
           scale: 1,
-          src: './public/img/warning.png' // 图标路径，根据需要调整
+          src: '/img/warning.png' // 图标路径，根据需要调整
         })
       })
     });
-    const defaultCoordinate = [118.712013, 24.783697]
+    const defaultCoordinate = [118.712013, 24.783697];
+    var CenterVectorSource = new VectorSource(); // 创建一个空的矢量源用于警告中心点
+    var CenterVectorLayer = new VectorLayer({ // 创建矢量图层使用上述矢量源
+      source: CenterVectorSource,
+      style: new Style({
+        image: new Icon({
+          anchor: [0.5, 1],
+          scale: 0.3,
+          src: '/img/center.png'
+        })
+      })
+    });
+    var CameraVectorSource = new VectorSource();
+    var CameraVectorLayer = new VectorLayer({
+      source:CameraVectorSource,
+      style:new Style({
+        image:new Icon({
+          anchor:[0.5, 1],
+          scale: 0.3,
+          src: '/img/camera2.png'
+        })
+      })
+    });
     // 创建或获取矢量源和图层
     //let centerPointVectorSource = new VectorSource();
     /*let centerPointVectorLayer = new VectorLayer({
@@ -69,6 +98,7 @@ export default {
     onMounted(  () => {
       //console.log('get',coordinate)
       initMap();
+      updateCameraFeature(Points);
       fetchData();
       nextTick(() => {
         source = new VectorSource({
@@ -88,6 +118,7 @@ export default {
     watch(coordinate, (newValue) => {
       console.log('Coordinate updated:', newValue);
       updateMapCenter(newValue);
+      updateCenterFeature(newValue);
     }, { immediate: true });
 
     function watchHandle() {
@@ -135,6 +166,8 @@ export default {
           })
         }),//地块GeoJson
         warnPointVectorLayer,// 添加警告点图层
+        CenterVectorLayer,//添加中心点图层
+        CameraVectorLayer //添加摄像头点位图层
       ]
       map = new Map({
         layers: Layers,
@@ -329,7 +362,7 @@ export default {
       } catch (error) {
         console.error('Error fetching data:', error);
       }
-    }
+    }//获取告警点位并添加
 
     function createIconStyle() {
       return new Style({
@@ -342,9 +375,24 @@ export default {
         })
       });
     }
-    /*watch(coordinate, (newValue) => {
-      updateMapCenter(newValue);
-    }, { immediate: true });*/
+
+    function updateCenterFeature(newCoordinate) {
+      if (!newCoordinate) return;
+
+      // Convert coordinate to map projection
+      const olCoordinate = fromLonLat(newCoordinate);
+      const feature = new Feature(new Point(olCoordinate));
+      CenterVectorSource.clear(); // Clear previous feature
+      CenterVectorSource.addFeature(feature); // Add new feature
+    }
+
+    function updateCameraFeature(points){
+      points.forEach(point => {
+        const CameraPoints = fromLonLat(point);
+        const feature = new Feature(new Point(CameraPoints));
+        CameraVectorSource.addFeature(feature);
+      });
+    }
     return {
       socket_data,
       curve,
