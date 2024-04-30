@@ -11,7 +11,7 @@ export default {
   },
   setup(){
    let msg = ref('')
-   let coordinate = ref([118.69402180854797, 24.784276672199237]);
+   let coordinate = ref([]);
     provide('coordinate', coordinate);
     function changeWsMsg(data) {
       msg.value = data

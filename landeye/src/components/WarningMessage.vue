@@ -1,8 +1,8 @@
 <template>
-    <div class="warningmessage">
-        <div class="warningmessage_item"><span>日期 类型 经度 纬度 <button @click="ishandle">上传日志</button></span></div>
-        <div class="warningmessage_item"><span>日期 类型 经度 纬度 <button @click="ishandle">上传日志</button></span></div>
-        <div class="warningmessage_item"><span>日期 类型 经度 纬度 <button @click="ishandle">上传日志</button></span></div>
+    <div class="warningmessage" :style="{opacity: showWarningMessage? 0.9:'0'}">
+        <div class="warningmessage_item"><span>告警信息1</span> <button @click="ishandle">上传日志</button></div>
+        <div class="warningmessage_item"><span>告警信息2</span> <button @click="ishandle">上传日志</button></div>
+        <div class="warningmessage_item"><span>告警信息3</span> <button @click="ishandle">上传日志</button></div>
     </div>
     <handleWarningMessage v-if="showlog" @close="ishandle" />
 </template>
@@ -12,7 +12,12 @@
     components:{
         handleWarningMessage
     },
-    data(){
+    props: {
+      showWarningMessage: {
+        type: Boolean,
+        default: false // 如果父组件没有传递这个值，默认为false
+      },
+      data(){
       return {
         showlog:false,
       }
@@ -22,51 +27,58 @@
         this.showlog = !this.showlog  
       }
     }
-  }
+  }}
 </script>
 <style>
   .warningmessage {
     position: fixed;
     border-radius: 10px;
-    top: 9%; 
-    right: 6%;
+    top: 10%;
+    right: 10%;
     width: 350px; 
-    height: 300px; 
-    background-color: rgba(155, 153, 153,0.9); 
+    height: 300px;
+    background-color: #51b679;
     display: flex; 
     flex-direction: column; 
     align-items: center; 
     z-index:3;
+    transition: opacity 0.5s ease-out;
+    opacity: 0;
    }
    .warningmessage_item {
     border-radius: 10px;
-    vertical-align: middle;
+    justify-content: space-between;
     margin-top:10px;
-    margin-bottom: 10px;
-    background-color: rgba(141, 139, 139, 0.45);
+    margin-bottom: 5px;
     width: 90%; 
     height: 50px;
-    display: flex; 
+    display: flex;
+    border-style: dashed;
+    border-width: 4px;
+    border-color: #dbe5d8;
+    background-color: transparent;
    }
    .warningmessage_item span {
-    margin-top: 8px;
+    margin-top: 13px;
     margin-left:35px;
     font-size:18px;
-    color:rgb(238, 235, 235);
+    color: #dbe5d8;
+     font-weight: bold;
    }
    .warningmessage_item button {
   margin-left: 10px; /* 在按钮和文本之间添加一些空间 */
-  background-color:rgba(133, 132, 132, 0.6);
   font-size:16px;
   border-radius: 4px; /* 边角圆滑 */
   cursor: pointer; 
   transition-duration: 0.4s;
-  color:rgb(237, 235, 235);
+  background-color: #a5e88f;
   padding:5px;
   border:none;
-  }
+  color: #565654;
+  font-weight: bold;
+   }
   .warningmessage_item button:hover {
-  background-color: #bac2bb; /* 鼠标悬停时的背景颜色 */
+  background-color: #c5efb8; /* 鼠标悬停时的背景颜色 */
   }
 
 </style>
