@@ -37,7 +37,7 @@ export default {
 <template>
   <div class="main-container">
   <header>
-    <h1 style="font-size: 35px;">塔视守望——自然资源智能动态监管系统</h1>
+    <h1 style="font-size: 35px;color: #287042;font-weight: bold">塔视守望——自然资源智能动态监管系统</h1>
   </header>
   <div class="container">
     <div class="left">
@@ -80,7 +80,7 @@ body {
 }
 
 header {
-  background-color: #333;
+  background-color: #ACD59F;
   color: #fff;
   padding: 10px;
   text-align: center;
