@@ -23,17 +23,19 @@
             </li>
         </div>
         <div class="website_name">
-          耕地资源智能动态监管系统
+          自然资源智能动态监管系统
         </div>
+        <img class="headerimg" src="/img/header.png" alt="">
         <div class='icon_logo'>
         <div id="changelightness_icon" :class="{ 'bx bxs-sun': !isclick, 'bx bx-moon': isclick }"   @click="changelightness"> </div>
         <div>
           <div id='warning_icon' class='bx bxs-bell' @click="toggleWarningMessage"></div>
-          <WarningMessage v-if="showWarningMessage" />
-        </div>
+          <WarningMessage :showWarningMessage="showWarningMessage" /></div>
         <div id="user_icon" class='bx bxs-user'></div>
         <div class='logo'>塔视守望</div>
+        <img class="logoimg" src="/img/logo.png" alt="">
       </div>
+
       </el-header>
       <el-main class="main">
         <div class='content'>
@@ -86,7 +88,6 @@
   .icon_logo {
     display:flex;
     justify-content: space-between;
-    align-items: center;
     position:relative;
     left:1200px;
     bottom:60px;
@@ -94,7 +95,7 @@
   }
   .mainbackground {
     //background-image: linear-gradient(120deg, #d4fc79 0%, #96e6a1 100%);
-    background-color: rgba(203, 207, 137, 0.5);
+    background-color:#ACD59F;
     height:100%;
   }
   html, body, #app {
@@ -117,8 +118,9 @@
     position:relative;
     height: 100%;
     width:95%;
+    margin:auto;
     border-radius:10px;
-    margin: auto;
+    padding:10px;
     z-index:1;
   }
   .el-icon {
@@ -129,18 +131,19 @@
     display: flex;
     flex-direction: column;
     position: fixed;
-    left: 1.25%;
+    left: 2.25%;
     border-radius: 10px;
-    top: 9.5%;
+    top: 10%;
     gap: 30px;
     height: 70vh;
-    background-color: rgba(137, 132, 132, 0.8);
+    background-color: #5ecc89;
     width: 200px;
     align-items: center;
-    padding: 20px 0px;
+    padding: 20px 0;
     transform: translateX(-130%);
     transition: all 0.5s ease;
     z-index:2;
+    opacity: 0.9
     }
   .menu-bar li {
     text-align: center;
@@ -148,15 +151,18 @@
     height:6vh;
     }
   .menu-bar li a {
-    color: white;
+    color: #f3f6f2;
     text-decoration: none;
     padding-bottom: 4px;
     font-size: 20px;
+    font-family: 'Open Sans', sans-serif;
+    font-weight: bold;
     border-bottom: 2px solid transparent;
     transition: all 0.3s ease;
+
   }
   .menu-bar li a:hover {
-    border-bottom: 2px solid white;
+    border-bottom: 2px solid;
   }
   .menu-bar.open {
     transform: translateX(0%);
@@ -164,45 +170,75 @@
   #mobile-bar {
     display: block;
     position: relative;
-    left: 10px;
+    left: 40px;
     top: 20px;
-    color: grey;
+    color: #61B087;
     font-size: 40px;
     transition: all 0.3s ease;
     cursor: pointer;
   }
   .website_name {
     position:relative;
-    left:15%;
+    left:8%;
     bottom:15px;
     font-size: 30px;
-    font-family: 'Heiti SC', '黑体', sans-serif;
+    font-family: 'Open Sans', sans-serif;
     font-weight: bold;
+    color:#287042;
+  }
+  .headerimg{
+    position:fixed;
+    width:430px;
+    height:110px;
+    top:0%;
+    left:37%;
   }
   #warning_icon {
     display: block;
-    color: grey;
+    color: #eae8e8;
     font-size: 40px;
     transition: all 0.3s ease;
     cursor: pointer;
+    padding-bottom: 1px;
+  }
+  #warning_icon:hover {
+    color: #61B087;
+    border-bottom: 2px solid ;
   }
   #changelightness_icon {
     display: block;
-    color: grey;
+    color: #eae8e8;
     font-size: 40px;
     transition: all 0.3s ease;
     cursor: pointer;
+    padding-bottom: 1px;
+  }
+  #changelightness_icon:hover {
+    color: #61B087;
+    border-bottom:2px solid;
   }
   #user_icon {
     display: block;
-    color: grey;
+    color: #eae8e8;
     font-size: 40px;
     transition: all 0.3s ease;
     cursor: pointer;
+    padding-bottom:1px;
+  }
+  #user_icon:hover {
+    color: #61B087;
+    border-bottom:2px solid;
   }
   .logo {
-    font-size: 25px;
-    font-family: 'Heiti SC', '黑体', sans-serif;
+    padding-top: 3px;
+    font-size: 30px;
     font-weight: bold;
+    color:#287042;
+  }
+  .logoimg {
+    position:fixed;
+    right:2%;
+    top:1%;
+    width:65px;
   }
 </style>
