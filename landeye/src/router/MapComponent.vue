@@ -83,8 +83,8 @@ export default {
       style:new Style({
         image:new Icon({
           anchor:[0.5, 1],
-          scale: 0.3,
-          src: '/img/camera2.png'
+          scale: 1,
+          src: '/img/camera.png'
         })
       })
     });
@@ -404,12 +404,133 @@ export default {
 </script>
 
 <template>
-  <div id="map"></div>
+  <div id="map">
+    <div class="btn-group">
+      <a-button class="btn" @click="switchToImg">影像</a-button>
+      <a-button class="btn" @click="switchToVec">矢量</a-button>
+    </div>
+    <div class="select">
+      <a-select
+          mode="multiple"
+          :default-value="['监控点']"
+          style="margin-left:5px;width: 200px"
+          placeholder="地图要素筛选"
+          @change="handleSelect"
+      >
+        <a-select-option value="监控点">
+          监控点
+        </a-select-option>
+        <a-select-option value="地块边界">
+          地块边界
+        </a-select-option>
+        <a-select-option value="告警点状态">
+          告警点状态
+        </a-select-option>
+        <a-select-option value="告警点级别">
+          告警点级别
+        </a-select-option>
+      </a-select>
+    </div>
+    <div id="legend">
+      <h2 class="legend-title">图例</h2>
+      <div class="legend-item">
+        <img src="/img/camera.png">
+        <h3>摄像头</h3>
+      </div>
+      <div class="legend-item">
+        <img src="/img/warning.png">
+        <h3>告警点位</h3>
+      </div>
+    </div>
+  </div>
 </template>
 
 <style scoped>
 #map {
   width: 100%;
   height: 100%;
+}
+.btn-group {
+  margin-top: 11px;
+  position: absolute;
+  right: 2%;
+  z-index: 1000;
+}
+.btn {
+  height: 40px;
+  width: auto;
+  margin-right: 10px;
+  cursor: pointer;
+  padding: 5px 10px;
+  background-color: #3ea164;
+  color: #e1e0e0;
+  border: none;
+  border-radius: 3px;
+  font-weight: bold;
+  font-size: 15px;
+}
+.btn:hover {
+  background-color: #cdeec2;
+  color: #262525;
+}
+#legend {
+  height: 250px;
+  width: 200px;
+  background-color: #c6debd;
+  position: absolute;
+  bottom: 1%;
+  right: 1%;
+  opacity: 80%;
+  z-index: 1000;
+  flex-direction: column;
+  border-radius: 10px;
+}
+.legend-title {
+  color:#1c1c1c;
+  font-weight:bold;
+  font-size: 22px;
+  margin: 10px;
+  padding-left: 70px
+}
+.legend-item {
+  display: flex;
+  align-items: center;
+  padding-left: 10px;
+  margin-bottom: 10px;
+  img {
+    margin-right: 10px;
+  }
+  h3 {
+    font-size: 18px;
+    font-weight: bold;
+    color: #1c1c1c;
+  }
+}
+.select {
+  height: 40px;
+  margin-top: 11px;
+  display: flex;
+  left: 700px;
+  position: absolute;
+  z-index: 1000;
+}
+#map .ol-zoom {
+  display: flex;
+  right: 10%;
+  background-color: rgba(255,255,255,0);
+}
+#map .ol-zoom .ol-zoom-in {
+  position: absolute;
+  right: 2.5%;
+  height: 42px;
+  width: 44px;
+  border-radius: 4px;
+}
+#map .ol-zoom .ol-zoom-out {
+  position: absolute;
+  right: 7.5%;
+  height: 42px;
+  width: 44px;
+  border-radius: 4px;
 }
 </style>

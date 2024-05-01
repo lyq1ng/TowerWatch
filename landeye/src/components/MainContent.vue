@@ -1,13 +1,12 @@
 <template>
   <div class="common-layout">
     <el-container class="mainbackground">
-
       <el-header class="header">
           <div class="menu-bar" >
               <div class="logopart">
                 <img class="logoimg" src="/img/logo.png" alt="">
                 <div class='logo'>塔视守望</div>
-            </div>
+              </div>
             <li id="item1">
               <a @click="goToMenu('/menu/firstpage')">
               <el-icon><House /></el-icon>  首页</a>

@@ -37,7 +37,12 @@ export default {
 <template>
   <div class="main-container">
   <header>
-    <h1 style="font-size: 35px;color: #287042;font-weight: bold">塔视守望——自然资源智能动态监管系统</h1>
+    <div class="logopart">
+      <img class="logoimg" src="/img/logo.png" alt="">
+      <div class='logo'>塔视守望</div>
+    </div>
+    <img class="headerimg" src="/img/header.png" alt="">
+    <h1 class="website_name">自然资源智能动态监管系统</h1>
   </header>
   <div class="container">
     <div class="left">
@@ -92,7 +97,24 @@ header {
   flex-direction: row;
   height: 90%;
 }
-
+.website_name {
+  position:fixed;
+  right:8%;
+  top:2%;
+  font-size: 30px;
+  font-family: 'Open Sans', sans-serif;
+  font-weight: bold;
+  color:#287042;
+}
+.headerimg{
+  position:fixed;
+  width:430px;
+  height:110px;
+  top:0%;
+  left:40%;
+  opacity:0.85;
+  z-index:1000
+}
 .left {
   display: flex;
   flex-direction: column;
@@ -104,10 +126,11 @@ header {
 .left-top {
   background-color: #eaeaea;
   height: 55%;
+  border-radius: 10px;
 }
 
 .left-bottom {
-  background-color: #eaeaea;
+  background-color: #ceeec2;
   height: 45%;
 }
 
@@ -115,5 +138,18 @@ header {
   background-color: #f9f9f9;
   width: 60%;
   padding: 10px;
+}
+.logopart{
+  display:flex;
+}
+.logo {
+  font-size: 26px;
+  font-weight: bold;
+  color:#287042;
+  margin-left: 15px;
+  margin-top: 5px;
+}
+.logoimg {
+  width:45px;
 }
 </style>

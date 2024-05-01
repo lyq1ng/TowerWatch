@@ -218,17 +218,17 @@ export default {
     <button class="btn" @click="turnDown">down</button>
     <button class="btn" @click="turnLeft">left</button>
     <button class="btn" @click="turnRight">right</button>
-    <button class="btn" @click="zoomIn">+</button>
-    <button class="btn" @click="zoomOut" style="margin-right: 60px">-</button>
+    <button class="btn" @click="zoomIn">放大</button>
+    <button class="btn" @click="zoomOut" style="margin-right: 60px">缩小</button>
   </div>
   <div class="content">
     <div class="list">
     <div class="list_top">
-      <div style="font-size: 20px;font-weight: bold">告警信息</div>
-      <div style="display: flex;justify-content: space-between;">
-        <span style="margin-left: 16px;">id</span>
-        <span>类型</span>
-        <span>日期</span>
+      <div style="font-size: 20px;color:#6c6a6a;margin-left:100px;font-weight: bold">告警信息栏</div>
+      <div class="title">
+        <span>id</span>
+        <span class="type">类型</span>
+        <span class="date">日期</span>
       </div>
     </div>
     <a-list
@@ -274,8 +274,9 @@ export default {
   background-image: linear-gradient(to right, #25aae1, #40e495);
   box-shadow: 0 4px 15px 0 rgba(49, 196, 190, 0.75);
   border: 0;
-  width: 55px;
-  font-size: 15px;
+  width: 65px;
+  height: 30px;
+  font-size: 18px;
   font-weight: bold;
   border-radius: 50px;
   color: white;
@@ -302,24 +303,37 @@ export default {
   display: flex;
   height: 88%;
 }
+.title {
+  padding: 0 20px;
+  font-weight: bold;
+  color:#6c6a6a;
+  .type {
+    padding-left: 30px;
+  }
+  .date {
+    padding-left: 100px;
+  }
+}
 .list {
-  width: 50%;
+  width: 60%;
   height: 100%;
-  border: 2px solid #b4afaf;
   position: relative;
+  border-radius: 10px;
+
 }
 
 .custom-item {
-  background-color: #cdefc1;
+
 }
 
 .custom-item:hover {
-  background-color: #8ac977;
+  background-color: #99d088;
+
 }
 
 .list_top {
   width: 100%;
-  height: 20%;
+  height: 23%;
   font-size: 16px;
   text-align: left;
 }
@@ -330,27 +344,36 @@ span {
 }
 
 .list-item-column {
-  flex: 1; /* 让每个列的宽度均匀 */
+  height:50px;
   text-align: left;
+  font-weight: bold;
+  padding-top: 10px;
+  color:#6c6a6a;
+  font-size:16px;
+
 }
 
 .pagination {
-  bottom: 0;
-  right: 0;
+  top: 90%;
+  right: 10%;
+  width:300px;
   position: absolute;
 }
 
 .message {
   width: 50%;
   height: 100%;
-  display: flex; /* 使用 Flexbox 布局 */
-  flex-direction: column; /* 垂直布局 */
-  justify-content: center; /* 垂直居中 */
-  align-items: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  border-radius: 10px;
+  color:#6c6a6a;
 }
 
 .message h3 {
   font-size: 16px;
   font-weight: bold;
+  text-align: left;
+  margin-left: 10px;
 }
 </style>
