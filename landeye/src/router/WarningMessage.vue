@@ -223,51 +223,49 @@ export default {
   </div>
   <div class="content">
     <div class="list">
-    <div class="list_top">
-      <div style="font-size: 22px;padding:6px 0;color:#6c6a6a;margin-left:110px;font-weight: bold">告警信息栏</div>
-      <div class="title">
-        <span>id</span>
-        <span class="type">类型</span>
-        <span class="date">日期</span>
+      <div class="list_top">
+        <div style="font-size: 20px;color:#6c6a6a;margin-left:100px;font-weight: bold">告警信息栏</div>
+        <div class="title">
+          <span>id</span>
+          <span class="type">类型</span>
+          <span class="date">日期</span>
+        </div>
       </div>
+      <a-list
+          :dataSource="currentData"
+          bordered
+          size="small"
+          v-if="dataLoaded"
+      >
+        <template #renderItem="{ item }">
+          <!--        <a-list-item>{{ item }}</a-list-item>-->
+          <a-list-item
+              class="custom-item"
+              @click="handleItemClick(item)"
+          >
+            <div class="list-item-column">{{ item.id }}</div>
+            <div class="list-item-column">{{ item.warnmsg_type_id }}</div>
+            <div class="list-item-column">{{ item.warn_time }}</div>
+          </a-list-item>
+        </template>
+      </a-list>
+      <a-pagination
+          class="pagination"
+          :current="currentPage"
+          :total="totalItems"
+          :pageSize="pageSize"
+          @change="handlePageChange"
+      />
     </div>
-    <div class="listbody">
-    <a-list
-        :dataSource="dataList"
-        size="small"
-        v-if="dataLoaded"
-    >
-      <template #renderItem="{ item }">
-<!--        <a-list-item>{{ item }}</a-list-item>-->
-        <a-list-item
-            class="custom-item"
-            @click="handleItemClick(item)"
-        >
-        <div class="list-item-column">{{ item.id }}</div>
-        <div class="list-item-column">{{ item.warnmsg_type_id }}</div>
-        <div class="list-item-column">{{ item.warn_time }}</div>
-        </a-list-item>
-      </template>
-    </a-list>
-    </div>
-    <!--
-    <a-pagination
-        class="pagination"
-        :current="currentPage"
-        :total="totalItems"
-        :pageSize="pageSize"
-        @change="handlePageChange"
-    /> -->
-  </div>
     <div class="message">
-    <h3>经纬度坐标: {{ coordinate[0].toFixed(2) }}  {{ coordinate[1].toFixed(2) }}</h3>
-    <br>
-    <h3>摄像头id： {{ cameraid }} </h3>
-    <br>
-    <h3>地块类型： {{ landtype }} </h3>
-    <br>
-    <h3>告警记录： {{ warningrecord }} </h3>
-  </div>
+      <h3>经纬度坐标: {{ coordinate[0] }} , {{ coordinate[1] }}</h3>
+      <br>
+      <h3>摄像头id： {{ cameraid }} </h3>
+      <br>
+      <h3>地块类型： {{ landtype }} </h3>
+      <br>
+      <h3>告警记录： {{ warningrecord }} </h3>
+    </div>
   </div>
 </template>
 
@@ -304,16 +302,13 @@ export default {
 .content {
   display: flex;
   height: 88%;
-  border-radius: 10px;
 }
 .title {
-  padding: 0 30px;
+  padding: 0 20px;
   font-weight: bold;
   color:#6c6a6a;
-  height: 30px;
-  border-bottom:2px solid #9f9b9b;
   .type {
-    padding-left: 80px;
+    padding-left: 30px;
   }
   .date {
     padding-left: 100px;
@@ -323,14 +318,12 @@ export default {
   width: 60%;
   height: 100%;
   position: relative;
-  border-right:2px dashed grey;
+  border-radius: 10px;
+
 }
-.listbody {
-  overflow-y: auto;
-  height:180px;
-}
+
 .custom-item {
-  border-bottom: 2px dashed #9f9b9b;
+
 }
 
 .custom-item:hover {
@@ -340,18 +333,31 @@ export default {
 
 .list_top {
   width: 100%;
+  height: 23%;
   font-size: 16px;
   text-align: left;
 }
 
+span {
+  flex: 1;
+  text-align: left;
+}
+
 .list-item-column {
-  height:30px;
+  height:50px;
   text-align: left;
   font-weight: bold;
-  padding-left: 10px;
-  padding-top: 3px;
+  padding-top: 10px;
   color:#6c6a6a;
   font-size:16px;
+
+}
+
+.pagination {
+  top: 90%;
+  right: 10%;
+  width:300px;
+  position: absolute;
 }
 
 .message {
