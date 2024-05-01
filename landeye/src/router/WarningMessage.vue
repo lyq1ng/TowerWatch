@@ -8,7 +8,7 @@ export default {
   },
   setup(props, { emit }) {
     const currentPage = ref(1); //默认当前显示告警信息第一页
-    const pageSize = 5; // 每页显示条目数
+    const pageSize = 3; // 每页显示条目数
     const totalItems = ref(20); // 总条目数
     //const dataList = reactive([...Array(100).keys()].map(i => `Item ${i + 1}`));
     let dataList =[]//初始化告警信息列表，属性由类型定义规定
@@ -213,40 +213,18 @@ export default {
 </script>
 
 <template>
-  <div class="btn">
-    <a-button
-        type="primary"
-        size="small"
-        style="margin-left: 60px"
-        @click="turnUp"
-    >
-      up
-    </a-button>
-    <a-button type="primary" size="small" @click="turnDown">
-      down
-    </a-button>
-    <a-button type="primary" size="small" @click="turnLeft">
-      left
-    </a-button>
-    <a-button type="primary" size="small" @click="turnRight">
-      right
-    </a-button>
-    <a-button type="primary" size="small" @click="zoomIn">
-      +
-    </a-button>
-    <a-button
-        type="primary"
-        size="small"
-        style="margin-right: 60px"
-        @click="zoomOut"
-    >
-      -
-    </a-button>
+  <div class="btn-group">
+    <button class="btn" @click="turnUp" style="margin-left: 60px">up</button>
+    <button class="btn" @click="turnDown">down</button>
+    <button class="btn" @click="turnLeft">left</button>
+    <button class="btn" @click="turnRight">right</button>
+    <button class="btn" @click="zoomIn">+</button>
+    <button class="btn" @click="zoomOut" style="margin-right: 60px">-</button>
   </div>
   <div class="content">
     <div class="list">
     <div class="list_top">
-      <div style="font-size: 20px;">告警信息</div>
+      <div style="font-size: 20px;font-weight: bold">告警信息</div>
       <div style="display: flex;justify-content: space-between;">
         <span style="margin-left: 16px;">id</span>
         <span>类型</span>
@@ -280,29 +258,45 @@ export default {
     />
   </div>
     <div class="message">
-    <h>经纬度坐标: {{ coordinate[0] }} , {{ coordinate[1] }}</h>
+    <h3>经纬度坐标: {{ coordinate[0] }} , {{ coordinate[1] }}</h3>
     <br>
-    <h>摄像头id： {{ cameraid }} </h>
+    <h3>摄像头id： {{ cameraid }} </h3>
     <br>
-    <h>地块类型： {{ landtype }} </h>
+    <h3>地块类型： {{ landtype }} </h3>
     <br>
-    <h>告警记录： {{ warningrecord }} </h>
+    <h3>告警记录： {{ warningrecord }} </h3>
   </div>
   </div>
 </template>
 
 <style scoped>
 .btn {
+  background-image: linear-gradient(to right, #25aae1, #40e495);
+  box-shadow: 0 4px 15px 0 rgba(49, 196, 190, 0.75);
+  border: 0;
+  width: 55px;
+  font-size: 15px;
+  font-weight: bold;
+  border-radius: 50px;
+  color: white;
+  outline: none;
+  cursor: pointer;
+}
+.btn:hover {
+  transform: translateY(-2px); /* 悬停时按钮向上移动 2px */
+}
+
+.btn:active {
+  transform: translateY(1px); /* 点击时按钮向下移动 1px */
+  box-shadow: 0 1px 3px 0 rgba(49, 196, 190, 0.75); /* 添加点击时的阴影效果 */
+}
+.btn-group {
   width: 100%;
   height: 12%;
   background-color: white;
   display: flex;
   justify-content: space-between;
   align-items: center;
-}
-.btn .ant-btn {
-  width: 50px;
-  height: 20px;
 }
 .content {
   display: flex;
@@ -316,11 +310,11 @@ export default {
 }
 
 .custom-item {
-  background-color: #c7c4c4;
+  background-color: #cdefc1;
 }
 
 .custom-item:hover {
-  background-color: lightgray;
+  background-color: #8ac977;
 }
 
 .list_top {
@@ -355,7 +349,8 @@ span {
   align-items: center;
 }
 
-.message h {
+.message h3 {
   font-size: 16px;
+  font-weight: bold;
 }
 </style>

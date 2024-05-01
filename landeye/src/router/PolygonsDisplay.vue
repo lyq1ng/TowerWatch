@@ -781,6 +781,7 @@ export default {
   z-index: 8;
   width: 70px;
   height: 30px;
+  font-weight: bold;
 }
 #Capture {
   position: absolute;
@@ -789,6 +790,7 @@ export default {
   z-index: 8;
   width: 70px;
   height: 30px;
+  font-weight: bold;
 }
 </style>
   
