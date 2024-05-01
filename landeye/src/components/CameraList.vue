@@ -42,6 +42,11 @@ export default {
       ],
     };
   },
+  provide() {
+    return {
+      getCurrentId: () => this.currentId
+    };
+  },
   mounted() {
     this.fetchData();
   },
@@ -57,6 +62,7 @@ export default {
           });
     },
     onDetail(id) {
+      this.currentId = id;
       window.open(`/land-eye?id=${id}`, '_blank');
     }
   }
