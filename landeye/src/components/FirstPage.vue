@@ -207,8 +207,8 @@ export default {
     <div id="popup" class="ol-popup" >
 <!--      <a href="#" id="popup-closer" class="ol-popup-closer"></a>-->
       <div id="popup-content"></div>
-      <a-button type="primary" @click="openCameraPage">进入摄像头</a-button>
-      <a-button type="dashed" @click="closePopUp">关闭</a-button>
+      <a-button class="button" @click="openCameraPage"><span>进入摄像头</span></a-button>
+      <a-button  class="button" @click="closePopUp">关闭</a-button>
     </div>
     <div class="btn-group">
       <a-button class="btn" @click="switchToImg">影像</a-button>
@@ -239,11 +239,11 @@ export default {
     <div id="legend">
       <h2 class="legend-title">图例</h2>
       <div class="legend-item">
-        <img src="/img/camera.png">
+        <img src="/img/camera.png" alt="">
         <h3>摄像头</h3>
       </div>
       <div class="legend-item">
-        <img src="/img/warning.png">
+        <img src="/img/warning.png" alt="">
         <h3>告警点位</h3>
       </div>
     </div>
@@ -281,6 +281,7 @@ export default {
   right: 2%;
   z-index: 1000;
 }
+
 .btn {
   height: 40px;
   width: auto;
@@ -341,12 +342,14 @@ export default {
 }
 .ol-popup {
   position: absolute;
-  background-color: white;
   box-shadow: 0 1px 4px rgba(0,0,0,0.2);
   padding: 15px;
+  font-weight: bold;
+  color: #4f4e4e;
+  background-color: #e3e1d5;
   border-radius: 10px;
   border: 1px solid #cccccc;
-  bottom: -50px;
+  bottom: -20px;
   left: -50px;
   min-width: 280px;
   display: none;
@@ -379,4 +382,13 @@ export default {
 #popup-content {
   text-align: center;
 }
+.button {
+  margin-left: 28px;
+  border:none;
+  font-weight: bold;
+  color:#4f4e4e;
+}
+.button span:hover {
+   color:#ccc9c9!important
+ }
 </style>

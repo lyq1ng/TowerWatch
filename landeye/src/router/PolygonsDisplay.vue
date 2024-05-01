@@ -8,8 +8,8 @@
           @loadedmetadata="handleVideoLoad"
           style="width:100%;height: 100%;object-fit:fill;margin: 0 auto;display: block;position: absolute;top: 50%;transform: translateY(-50%);">
       </video>
-      <a-button type="default" id="Switch" @click="toggle">切换</a-button>
-      <a-button type="default" id="Capture" @click="captureScreenshot">抓图</a-button>
+      <button class="btn1" id="Switch" @click="toggle">{{mode}}</button>
+      <button class="btn1" id="Capture" @click="captureScreenshot">监控视频抓图</button>
     </div>
 </template>
   
@@ -74,9 +74,10 @@ export default {
             coordsData: [], // to store the coords data from JSON
             mycanvas: document.createElement("canvas"),
             rect_canvas: document.createElement("canvas"),
-            Sendcoordinate: false,
+            Sendcoordinate:false,
             isDrawing: false,
             message: "",
+            mode:"监控定位模式",
         }
     },
 
@@ -654,11 +655,12 @@ export default {
                 if (dot_now) {
                     document.querySelector(".player").removeChild(dot_now);
                 }
-
+                this.mode="监控定位模式"
                 this.Sendcoordinate = false;
                 this.mycanvas.style.pointerEvents = "none";
                 this.rect_canvas.style.pointerEvents = "none";
             } else {
+                this.mode="拉框放大模式"
                 this.Sendcoordinate = true;
                 this.mycanvas.style.pointerEvents = "auto"
                 this.rect_canvas.style.pointerEvents = "auto";
@@ -684,9 +686,6 @@ export default {
             this.message = JSON.stringify(data);
             console.log(this.message)
             this.sendMessage();
-
-
-
             // eventBus.$emit('clearMapPoint')
         },
 
@@ -778,8 +777,6 @@ export default {
   top: 90%;
   left: 28%;
   z-index: 8;
-  width: 70px;
-  height: 30px;
   font-weight: bold;
 }
 #Capture {
@@ -787,9 +784,29 @@ export default {
   top: 90%;
   left: 59%;
   z-index: 8;
-  width: 70px;
-  height: 30px;
   font-weight: bold;
+}
+.btn1 {
+  display:flex;
+  background-image: linear-gradient(to right, #25aae1, #40e495);
+  box-shadow: 0 4px 15px 0 rgba(49, 196, 190, 0.75);
+  border: 0;
+  height: 30px;
+  font-size: 16px;
+  font-weight: bold;
+  border-radius: 50px;
+  color: #fafafa;
+  outline: none;
+  cursor: pointer;
+}
+.btn1:hover {
+  transform: translateY(-2px); /* 悬停时按钮向上移动 2px */
+  color: white;
+}
+
+.btn1:active {
+  transform: translateY(1px); /* 点击时按钮向下移动 1px */
+  box-shadow: 0 1px 3px 0 rgba(49, 196, 190, 0.75); /* 添加点击时的阴影效果 */
 }
 </style>
   

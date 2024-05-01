@@ -496,11 +496,10 @@ export default {
   border-radius: 10px;
 }
 .legend-title {
-  color:#1c1c1c;
+  color: #424242;
   font-weight:bold;
   font-size: 22px;
   margin: 10px;
-  padding-left: 70px
 }
 .legend-item {
   display: flex;
@@ -513,27 +512,7 @@ export default {
   h3 {
     font-size: 18px;
     font-weight: bold;
-    color: #1c1c1c;
+    color: #424242;
   }
-}
-
-#map .ol-zoom {
-  display: flex;
-  right: 10%;
-  background-color: rgba(255,255,255);
-}
-#map .ol-zoom .ol-zoom-in {
-  position: absolute;
-  right: 2.5%;
-  height: 42px;
-  width: 44px;
-  border-radius: 4px;
-}
-#map .ol-zoom .ol-zoom-out {
-  position: absolute;
-  right: 7.5%;
-  height: 42px;
-  width: 44px;
-  border-radius: 4px;
 }
 </style>

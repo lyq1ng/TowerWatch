@@ -282,7 +282,7 @@ export default {
   font-size: 18px;
   font-weight: bold;
   border-radius: 50px;
-  color: white;
+  color: #fafafa;
   outline: none;
   cursor: pointer;
 }
@@ -312,31 +312,35 @@ export default {
   font-weight: bold;
   color:#6c6a6a;
   height: 30px;
-  border-bottom:2px solid #9f9b9b;
+  margin-left: 10px;
+  width:98%;
+  border-bottom:2px solid #b2afaf;
   .type {
-    padding-left: 80px;
+    padding-left: 70px;
   }
   .date {
-    padding-left: 100px;
+    padding-left:90px;
   }
 }
 .list {
-  width: 60%;
+  width: 65%;
   height: 100%;
   position: relative;
-  border-right:2px dashed grey;
+  background-color: #ceeec2;
+  border-radius: 10px;
 }
 .listbody {
   overflow-y: auto;
   height:180px;
 }
 .custom-item {
-  border-bottom: 2px dashed #9f9b9b;
+  margin-left: 10px;
+  width:94%;
+  border-bottom: 2px dashed #c2bfbf;
 }
 
 .custom-item:hover {
   background-color: #99d088;
-
 }
 
 .list_top {
@@ -356,7 +360,9 @@ export default {
 }
 
 .message {
-  width: 50%;
+  background-color: #ceeec2;
+  margin-left: 10px;
+  width: 54%;
   height: 100%;
   display: flex;
   flex-direction: column;
@@ -370,5 +376,25 @@ export default {
   font-weight: bold;
   text-align: left;
   margin-left: 10px;
+}
+/* 为整个页面设置滚动条样式 */
+/* 滚动条整体部分 */
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+/* 滚动条滑块 */
+::-webkit-scrollbar-thumb {
+  background: #a6a5a5;
+}
+
+/* 滚动条轨道 */
+::-webkit-scrollbar-track {
+  background: #ddd;
+}
+
+/* 滚动条滑块:hover状态样式 */
+::-webkit-scrollbar-thumb:hover {
+  background: #777676;
 }
 </style>

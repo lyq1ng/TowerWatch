@@ -70,9 +70,7 @@ export default {
   font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
   line-height: 1.5;
   font-weight: 400;
-
   background-color: #242424;
-
   font-synthesis: none;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
@@ -109,8 +107,8 @@ header {
 .headerimg{
   position:fixed;
   width:430px;
-  height:110px;
-  top:0%;
+  height:105px;
+  top:0;
   left:40%;
   opacity:0.85;
   z-index:1000
@@ -130,8 +128,8 @@ header {
 }
 
 .left-bottom {
-  background-color: #ceeec2;
   height: 45%;
+  border-radius: 10px;
 }
 
 .right {

@@ -9,11 +9,11 @@
               </div>
             <li id="item1">
               <a @click="goToMenu('/menu/firstpage')">
-              <el-icon><House /></el-icon>  首页</a>
+                <el-icon><HomeFilled /></el-icon>  首页</a>
             </li >
             <li id="item2">
               <a @click="goToMenu('/menu/camera')">
-              <el-icon><Camera /></el-icon>  摄像头列表</a>
+                <el-icon><CameraFilled /></el-icon>  摄像头列表</a>
             </li>
             <li id="item3">
               <a @click="goToMenu('/menu/statistics')">
@@ -56,13 +56,10 @@
       };
     },
     methods: {
-      toggleMenu() {
-      this.isMenuOpen = !this.isMenuOpen
-    },
-    goToMenu(path) {
-      this.$router.push(path)
-      this.isMenuOpen = !this.isMenuOpen
-    },
+      goToMenu: function (path) {
+        this.$router.push(path)
+        this.isMenuOpen = !this.isMenuOpen
+      },
     changelightness(){
       this.isclick = !this.isclick
     },
@@ -95,21 +92,6 @@
     background-color:#ACD59F;
     height:100%;
   }
-  .leaf1 {
-    position:fixed;
-    left:-85px;
-    top:50px;
-    width:500px;
-    height:750px
-  }
-  .leaf2 {
-    position:fixed;
-    right:-90px;
-    top:50px;
-    width:500px;
-    height:750px;
-    opacity:0.6
-  }
   html, body, #app {
     height: 100vh;
     width: 100vw;
@@ -132,10 +114,10 @@
     border-radius: 10px;
     padding:10px;
     z-index:1;
-    margin-left:205px;
+    margin-left:200px;
   }
   .el-icon {
-    vertical-align: middle; 
+    vertical-align: middle;
     font-size:25px;
   }
   .menu-bar {
@@ -143,17 +125,16 @@
     flex-direction: column;
     position: fixed;
     left: 0;
-    top: 0%;
+    top: 0;
     gap: 27px;
     border-radius: 10px;
     height: 100%;
-    background-color: rgba(233, 237, 214, 0.8);
+    background-color: rgba(215, 217, 207, 0.8);
     //background-color: rgba(172,213,159,0.4);
     width: 200px;
     align-items: center;
     padding: 20px 0;
     z-index:2;
-
     }
   .menu-bar li {
     list-style-type: none;
@@ -165,7 +146,7 @@
     color: #777575;
     text-decoration: none;
     padding-top: 14px;
-    font-size: 19px;
+    font-size: 21px;
     font-weight: bold;
     padding-left: 20px;
     padding-right: 10px;
@@ -184,7 +165,7 @@
   #item1::after {
     content: ''; /* 伪元素内容为空 */
     position: absolute; /* 绝对定位 */
-    top:20px; /* 顶部与li元素顶部对齐 */
+    top:90px; /* 顶部与li元素顶部对齐 */
     right: 0; /* 右侧与li元素右侧对齐 */
     width: 8px; /* 伪元素的宽度 */
     height: 52px; /* 伪元素的高度与li元素相同 */
@@ -197,7 +178,7 @@
   #item2::after {
     content: ''; /* 伪元素内容为空 */
     position: absolute; /* 绝对定位 */
-    top:92px; /* 顶部与li元素顶部对齐 */
+    top:162px; /* 顶部与li元素顶部对齐 */
     right: 0; /* 右侧与li元素右侧对齐 */
     width: 8px; /* 伪元素的宽度 */
     height: 52px; /* 伪元素的高度与li元素相同 */
@@ -210,7 +191,7 @@
   #item3::after {
     content: ''; /* 伪元素内容为空 */
     position: absolute; /* 绝对定位 */
-    top:164px; /* 顶部与li元素顶部对齐 */
+    top:234px; /* 顶部与li元素顶部对齐 */
     right: 0; /* 右侧与li元素右侧对齐 */
     width: 8px; /* 伪元素的宽度 */
     height: 52px; /* 伪元素的高度与li元素相同 */
@@ -233,7 +214,7 @@
     position:fixed;
     width:430px;
     height:110px;
-    top:0%;
+    top:0;
     left:45%;
     opacity:0.85
   }
