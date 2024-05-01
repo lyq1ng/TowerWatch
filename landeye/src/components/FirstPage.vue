@@ -311,7 +311,6 @@ export default {
   left: 10px;
   position: absolute;
   z-index: 1000;
-
 }
 .ol-popup {
   position: absolute;

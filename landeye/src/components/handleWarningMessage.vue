@@ -1,18 +1,20 @@
 <template>
     <div class="handlewarningmessage" :style="{top:showlog? '10%':'-100%', zIndex:showlog?4:-10,opacity:showlog?0.95:0}">
-        <el-input class='inputitem' placeholder="处理人姓名" />
+        <el-input class='inputitem'  placeholder="处理人姓名" />
         <el-date-picker class='dateitem' type="datetime" size=large placeholder="处理时间"></el-date-picker>
         <el-input class='descriptionitem' placeholder="处理情况说明"  maxlength="100" show-word-limit rows=8  type="textarea"/>
         <div class="button-container">
-          <el-button color="#EBEFA5" round :dark="isDark" >提交图片</el-button>
-          <el-button color="#EBEFA5" round :dark="isDark" @click="message" >提交日志</el-button>
-          <el-button color="#EBEFA5" round :dark="isDark" @click="$emit('close')" >关闭</el-button>
+          <el-button color="#EBEFA5" round  >提交图片</el-button>
+          <el-button color="#EBEFA5" round  @click="message" >提交日志</el-button>
+          <el-button color="#EBEFA5" round  @click="$emit('close')" >关闭</el-button>
         </div>
 
     </div>
 </template>
 <script>
   import { ElMessage } from 'element-plus'
+  import {ref} from "vue";
+
   export default{
     props:{
       showlog:{

@@ -409,12 +409,12 @@ export default {
       <a-button class="btn" @click="switchToImg">影像</a-button>
       <a-button class="btn" @click="switchToVec">矢量</a-button>
     </div>
-    <div class="select">
+      <div class="select">
       <a-select
           mode="multiple"
           :default-value="['监控点']"
-          style="margin-left:5px;width: 200px"
           placeholder="地图要素筛选"
+          style="margin-left:5px;width: 200px"
           @change="handleSelect"
       >
         <a-select-option value="监控点">
@@ -430,7 +430,7 @@ export default {
           告警点级别
         </a-select-option>
       </a-select>
-    </div>
+      </div>
     <div id="legend">
       <h2 class="legend-title">图例</h2>
       <div class="legend-item">
@@ -450,10 +450,12 @@ export default {
   width: 100%;
   height: 100%;
 }
+
 .btn-group {
-  margin-top: 11px;
+  margin-top: 30px;
   position: absolute;
-  right: 2%;
+  top: 8.5%;
+  right: 3%;
   z-index: 1000;
 }
 .btn {
@@ -473,13 +475,21 @@ export default {
   background-color: #cdeec2;
   color: #262525;
 }
+.select {
+  height: 40px;
+  margin-top: 11px;
+  display: flex;
+  left: 700px;
+  position: absolute;
+  z-index: 1000;
+}
 #legend {
   height: 250px;
   width: 200px;
   background-color: #c6debd;
   position: absolute;
   bottom: 1%;
-  right: 1%;
+  right: 10px;
   opacity: 80%;
   z-index: 1000;
   flex-direction: column;
@@ -506,18 +516,11 @@ export default {
     color: #1c1c1c;
   }
 }
-.select {
-  height: 40px;
-  margin-top: 11px;
-  display: flex;
-  left: 700px;
-  position: absolute;
-  z-index: 1000;
-}
+
 #map .ol-zoom {
   display: flex;
   right: 10%;
-  background-color: rgba(255,255,255,0);
+  background-color: rgba(255,255,255);
 }
 #map .ol-zoom .ol-zoom-in {
   position: absolute;

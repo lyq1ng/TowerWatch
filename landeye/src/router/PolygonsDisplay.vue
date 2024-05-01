@@ -580,7 +580,6 @@ export default {
         },
 
         async VideoplayResize() {
-
             let myVideo = document.querySelector(".player");
             const parent = myVideo.parentNode.parentNode;
             const parentStyles = window.getComputedStyle(parent);

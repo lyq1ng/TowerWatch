@@ -63,8 +63,15 @@ export default {
 };
 </script>
 <style>
-.TableSize{
-  font-size:20px;
+td.TableSize {
+  font-size:19px;
+  font-weight: bold;
+  color: #737272;
+}
+th.TableSize {
+  font-size:19px;
+  font-weight: bold;
+  color: #737272!important;
 }
 .detail-button {
   display: flex;      /* 使用 flex 布局 */
@@ -73,7 +80,7 @@ export default {
   height:100%;
   width: 100%;
   background-color: #4CAF50; /* 绿色背景 */
-  color: white; /* 白色文字 */
+  color: #fffefe; /* 白色文字 */
   border: none; /* 无边框 */
   padding: 8px 16px; /* 内边距 */
   text-align: center; /* 文字居中 */
@@ -82,6 +89,8 @@ export default {
   margin: 4px 2px; /* 外边距 */
   cursor: pointer; /* 鼠标指针为手形 */
   border-radius: 5px; /* 圆角边框 */
+  font-weight: bold;
 }
-
+.detail-button:hover {
+  background-color: #80de84!important;}
 </style>

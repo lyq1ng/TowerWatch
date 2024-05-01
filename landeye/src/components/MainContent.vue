@@ -19,10 +19,7 @@
               <a @click="goToMenu('/menu/statistics')">
               <el-icon><Histogram /></el-icon>  数据可视化</a>
             </li>
-            <li id="item4">
-              <a @click="goToMenu('/menu/mypage')">
-              <el-icon><HomeFilled /></el-icon>  我的</a>
-            </li>
+
         </div>
         <div class="website_name">
           自然资源智能动态监管系统
@@ -221,19 +218,6 @@
     opacity: 0; /* 初始透明度为0，使其不可见 */
   }
   #item3:hover::after {
-    opacity: 0.5; /* 悬停时透明度变为0.5，使其可见 */
-  }
-  #item4::after {
-    content: ''; /* 伪元素内容为空 */
-    position: absolute; /* 绝对定位 */
-    top:236px; /* 顶部与li元素顶部对齐 */
-    right: 0; /* 右侧与li元素右侧对齐 */
-    width: 8px; /* 伪元素的宽度 */
-    height: 52px; /* 伪元素的高度与li元素相同 */
-    background-color: #2fb06b; /* 伪元素的背景颜色 */
-    opacity: 0; /* 初始透明度为0，使其不可见 */
-  }
-  #item4:hover::after {
     opacity: 0.5; /* 悬停时透明度变为0.5，使其可见 */
   }
   .website_name {
