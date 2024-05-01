@@ -1,10 +1,13 @@
 <template>
   <div class="common-layout">
     <el-container class="mainbackground">
-      <img class='leaf1' src="/img/leaf.png" alt="">
-      <img class='leaf2' src="/img/leaf.png" alt="">
+
       <el-header class="header">
           <div class="menu-bar" >
+              <div class="logopart">
+                <img class="logoimg" src="/img/logo.png" alt="">
+                <div class='logo'>塔视守望</div>
+            </div>
             <li id="item1">
               <a @click="goToMenu('/menu/firstpage')">
               <el-icon><House /></el-icon>  首页</a>
@@ -31,8 +34,7 @@
           <div id="changelightness_icon" :class="{ 'bx bxs-sun': !isclick, 'bx bx-moon': isclick }"   @click="changelightness"> </div>
           <WarningMessage :showWarningMessage="showWarningMessage" />
           <div id="user_icon" class='bx bxs-user'></div>
-        <div class='logo'>塔视守望</div>
-        <img class="logoimg" src="/img/logo.png" alt="">
+
       </div>
 
       </el-header>
@@ -90,7 +92,7 @@
     position:fixed;
     right:2%;
     top:2.5%;
-    width:160px;
+    width:180px;
   }
   .mainbackground {
     //background-image: linear-gradient(120deg, #d4fc79 0%, #96e6a1 100%);
@@ -130,11 +132,11 @@
     background-color:rgba(233, 237, 214, 0.8);
     position:relative;
     height:100%;
-    width:82%;
-    border-radius:10px;
+    width:86%;
+    border-radius: 10px;
     padding:10px;
     z-index:1;
-    margin-left:170px;
+    margin-left:205px;
   }
   .el-icon {
     vertical-align: middle; 
@@ -145,11 +147,13 @@
     flex-direction: column;
     position: fixed;
     left: 0;
-    top: 10%;
+    top: 0%;
     gap: 27px;
+    border-radius: 10px;
     height: 100%;
-    background-color: rgba(172,213,159,0.4);
-    width: 170px;
+    background-color: rgba(233, 237, 214, 0.8);
+    //background-color: rgba(172,213,159,0.4);
+    width: 200px;
     align-items: center;
     padding: 20px 0;
     z-index:2;
@@ -161,23 +165,26 @@
     width:100%;
     background-color: transparent;
     }
+  .menu-bar li a {
+    color: #777575;
+    text-decoration: none;
+    padding-top: 14px;
+    font-size: 19px;
+    font-weight: bold;
+    padding-left: 20px;
+    padding-right: 10px;
+    display: block;
+  }
+  .menu-bar li a:hover {
+    color: #fffdfd
+  }
   .menu-bar li :hover {
     list-style-type: none;
     height:7vh;
     width:100%;
     background-color: rgba(57, 203, 124, 0.4);
   }
-  .menu-bar li a {
-    color: #f3efef;
-    text-decoration: none;
-    padding-top: 14px;
-    font-size: 19px;
-    font-family: 'Open Sans', sans-serif;
-    font-weight: bold;
-    padding-left: 20px;
-    padding-right: 10px;
-    display: block;
-  }
+
   #item1::after {
     content: ''; /* 伪元素内容为空 */
     position: absolute; /* 绝对定位 */
@@ -232,7 +239,7 @@
   }
   .website_name {
     position:fixed;
-    right:14%;
+    right:65%;
     top:3%;
     font-size: 28px;
     font-family: 'Open Sans', sans-serif;
@@ -244,7 +251,7 @@
     width:430px;
     height:110px;
     top:0%;
-    left:37%;
+    left:45%;
     opacity:0.85
   }
   #warning_icon {
@@ -283,18 +290,17 @@
     color: #61B087;
     border-bottom:2px solid;
   }
+  .logopart{
+    display:flex;
+  }
   .logo {
-    position:fixed;
-    left:3.5%;
-    top:3%;
     font-size: 26px;
     font-weight: bold;
     color:#287042;
+    margin-left: 15px;
+    margin-top: 5px;
   }
   .logoimg {
-    position:fixed;
-    left:0.5%;
-    top:2%;
     width:45px;
   }
 </style>

@@ -94,31 +94,6 @@ export default {
         }
       });
     }
-    function handleChange(value) {
-      switch (value){
-        case '武昌区':
-          map.getView().animate({
-            center: [114.31599,30.55386],
-            duration: 500
-          });
-          break;
-        case '洪山区':
-          map.getView().animate({
-            center: [114.34253,30.49984],
-            duration: 500
-          });
-          break;
-        case '江夏区':
-          map.getView().animate({
-            center: [114.32168,30.37559],
-            duration: 500
-          });
-          break;
-        default:
-          break;
-      }
-    }
-
     function handleSelect(value){
       addLayer.forEach((item)=>{
         if(!value.includes(item.get("name"))){
@@ -191,7 +166,6 @@ export default {
     return {
       switchToImg,
       switchToVec,
-      handleChange,
       handleSelect,
       closePopUp,
       openCameraPage,
@@ -214,26 +188,10 @@ export default {
     </div>
     <div class="select">
       <a-select
-        show-search
-        placeholder="选择行政区划"
-        style="width: 200px"
-        @change="handleChange"
-    >
-      <a-select-option value="武昌区">
-        武昌区
-      </a-select-option>
-      <a-select-option value="洪山区">
-        洪山区
-      </a-select-option>
-      <a-select-option value="江夏区">
-        江夏区
-      </a-select-option>
-    </a-select>
-      <a-select
           mode="multiple"
           :default-value="['监控点']"
-          style="width: 100%"
-          placeholder="图层筛选"
+          style="margin-left:5px;width: 200px"
+          placeholder="地图要素筛选"
           @change="handleSelect"
       >
         <a-select-option value="监控点">
@@ -251,7 +209,7 @@ export default {
       </a-select>
     </div>
     <div id="legend">
-      <h2 style="font-size: 20px; margin-bottom: 10px; padding-left: 70px">图例</h2>
+      <h2 class="legend-title">图例</h2>
       <div class="legend-item">
         <img src="/img/camera.png">
         <h3>摄像头</h3>
@@ -277,16 +235,17 @@ export default {
 }
 #map .ol-zoom .ol-zoom-in {
   position: absolute;
-  right: 4%;
-  height: 44px;
+  right: 2.5%;
+  height: 42px;
   width: 44px;
-
+  border-radius: 4px;
 }
 #map .ol-zoom .ol-zoom-out {
   position: absolute;
-  right: 8%;
-  height: 44px;
+  right: 7.5%;
+  height: 42px;
   width: 44px;
+  border-radius: 4px;
 }
 .btn-group {
   margin-top: 11px;
@@ -300,35 +259,48 @@ export default {
   margin-right: 10px;
   cursor: pointer;
   padding: 5px 10px;
-  background-color: #0078A8;
-  color: #fff;
+  background-color: #3ea164;
+  color: #e1e0e0;
   border: none;
   border-radius: 3px;
+  font-weight: bold;
+  font-size: 15px;
 }
 .btn:hover {
-  background-color: #005580;
+  background-color: #cdeec2;
+  color: #262525;
 }
 #legend {
   height: 250px;
   width: 200px;
-  background-color: #f2efef;
+  background-color: #c6debd;
   position: absolute;
   bottom: 1%;
   right: 1%;
-  opacity: 70%;
+  opacity: 80%;
   z-index: 1000;
   flex-direction: column;
+  border-radius: 10px;
+}
+.legend-title {
+  color:#1c1c1c;
+  font-weight:bold;
+  font-size: 22px;
+  margin: 10px;
+  padding-left: 70px
 }
 .legend-item {
   display: flex;
   align-items: center;
-  padding-left: 30px;
+  padding-left: 10px;
   margin-bottom: 10px;
   img {
     margin-right: 10px;
   }
   h3 {
-    font-size: 15px;
+    font-size: 18px;
+    font-weight: bold;
+    color: #1c1c1c;
   }
 }
 .select {
@@ -338,6 +310,7 @@ export default {
   left: 10px;
   position: absolute;
   z-index: 1000;
+
 }
 .ol-popup {
   position: absolute;
