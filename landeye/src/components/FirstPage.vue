@@ -11,12 +11,14 @@ import { XYZ } from 'ol/source';
 import { Tile as TileLayer, Vector as VectorLayer } from 'ol/layer';
 import { Vector as VectorSource } from 'ol/source';
 import { Overlay } from "ol";
+import axios from "axios";
 export default {
   name: 'MapComponent',
   setup() {
     let map;
     let baseLayer = [];
     let addLayer = [];
+    let WarnPoint = [];
     const points = [
       [118.759167,24.772778],
       [118.699167,24.772778],
@@ -28,13 +30,14 @@ export default {
     const cameraSource = new VectorSource();
     const warningSource = new VectorSource();
 
+
     onMounted(() => {
       initMap()
     });
 
     function initMap(){
-      addCameraFeature(points)
-      addWarningFeature(points)
+      fetchData();
+      addCameraFeature(points);
       baseLayer = [
         //添加天地图web底图服务
         new TileLayer({
@@ -54,7 +57,7 @@ export default {
       })
       addLayer = [
         cameraLayer,
-        warningLayer,
+        warningLayer
       ]
       map = new Map({
         target: 'map',
@@ -64,7 +67,7 @@ export default {
         ],
         view: new View({
           projection: "EPSG:4326",
-          center: [118.730833,24.767778],
+          center: [118.708611,24.769444],
           zoom: 14,
           minzoom:8,
           maxzoom:17
@@ -140,7 +143,7 @@ export default {
       })
     }
 
-    function addWarningFeature(points) {
+   /* function addWarningFeature(points) {
       const warningStyle = new Style({
         image: new Icon({
           src: '/img/warning.png',
@@ -155,7 +158,31 @@ export default {
         pointFeature.setStyle(warningStyle)
         warningSource.addFeature(pointFeature)
       })
-    }
+    }*/
+
+    async function fetchData() {
+      const warningStyle = new Style({
+        image: new Icon({
+          src: '/img/warning.png',
+          anchor: [0.5, 1],
+        })
+      })
+      try {
+        const response = await axios.get('http://8.148.10.46:3050/api/MapComp');
+        WarnPoint.splice(0, WarnPoint.length, ...response.data);
+        console.log('WarningPoint',WarnPoint);
+        WarnPoint.forEach(point => {
+          const iconFeature = new Feature({
+            geometry: new Point(fromLonLat([point.cenlon, point.cenlat],'EPSG:4326'))
+          });
+          iconFeature.setStyle(warningStyle);
+          warningSource.addFeature(iconFeature)
+          console.log('WarningSource features:', warningSource.getFeatures());
+        });
+      } catch (error) {
+        console.error('Error fetching data:', error);
+      }
+    }//获取告警点位并添加
 
     function openCameraPage(){
       window.open('/land-eye', '_blank');
