@@ -272,7 +272,7 @@ export default {
 }
 #map .ol-zoom {
   display: flex;
-  right: 7%;
+  right: 10%;
   background-color: rgba(255,255,255,0);
 }
 #map .ol-zoom .ol-zoom-in {

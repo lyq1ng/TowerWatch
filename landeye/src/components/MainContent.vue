@@ -1,8 +1,8 @@
 <template>
   <div class="common-layout">
     <el-container class="mainbackground">
-      <img class='leaf1' src="/img/leaf.png">
-      <img class='leaf2' src="/img/leaf.png">
+      <img class='leaf1' src="/img/leaf.png" alt="">
+      <img class='leaf2' src="/img/leaf.png" alt="">
       <el-header class="header">
           <div class="menu-bar" >
             <li id="item1">
@@ -234,7 +234,6 @@
     position:fixed;
     right:14%;
     top:3%;
-    bottom:15px;
     font-size: 28px;
     font-family: 'Open Sans', sans-serif;
     font-weight: bold;
