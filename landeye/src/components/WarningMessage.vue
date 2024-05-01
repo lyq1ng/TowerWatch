@@ -1,10 +1,10 @@
 <template>
-    <div class="warningmessage" :style="{opacity: showWarningMessage? 0.9:'0'}">
-        <div class="warningmessage_item"><span>告警信息1</span> <button @click="ishandle">上传日志</button></div>
-        <div class="warningmessage_item"><span>告警信息2</span> <button @click="ishandle">上传日志</button></div>
-        <div class="warningmessage_item"><span>告警信息3</span> <button @click="ishandle">上传日志</button></div>
+    <div class="warningmessage" :style="{top:showWarningMessage? '10%':'-100%' ,opacity: showWarningMessage? 0.9:0}">
+        <div class="warningmessage_item"><span>告警信息1</span> <button @click="ishandle" >上传日志</button></div>
+        <div class="warningmessage_item"><span>告警信息2</span> <button @click="ishandle" >上传日志</button></div>
+        <div class="warningmessage_item"><span>告警信息3</span> <button @click="ishandle" >上传日志</button></div>
     </div>
-    <handleWarningMessage v-if="showlog" @close="ishandle" />
+    <handleWarningMessage :showlog="showlog" @close="ishandle" />
 </template>
 <script>
   import handleWarningMessage from './handleWarningMessage.vue'
@@ -16,25 +16,26 @@
       showWarningMessage: {
         type: Boolean,
         default: false // 如果父组件没有传递这个值，默认为false
-      },
+      }},
       data(){
       return {
         showlog:false,
-      }
+      };
     },
     methods:{
       ishandle(){
-        this.showlog = !this.showlog  
+        this.showlog = !this.showlog
       }
     }
-  }}
+  }
+
 </script>
 <style>
   .warningmessage {
     position: fixed;
     border-radius: 10px;
-    top: 10%;
-    right: 10%;
+    top: -100%;
+    right: 0%;
     width: 350px; 
     height: 300px;
     background-color: #51b679;
