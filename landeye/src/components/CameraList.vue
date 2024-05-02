@@ -5,13 +5,14 @@
       rowKey="id"
   >
     <template v-slot:action="{ record }">
-      <a-button type="primary" class="detail-button" @click="onDetail(record.id)">查看摄像头信息</a-button>
+      <a-button type="primary" class="detail-button" @click="onDetail(record.id,record.lonlat)">查看摄像头信息</a-button>
     </template>
   </a-table>
 </template>
 
 <script>
 import axios from 'axios';
+//import {id} from "element-plus/es/locale/index";
 
 export default {
   name: 'DataTable',
@@ -42,11 +43,7 @@ export default {
       ],
     };
   },
-  provide() {
-    return {
-      getCurrentId: () => this.currentId
-    };
-  },
+  props: ['camera'],
   mounted() {
     this.fetchData();
   },
@@ -61,9 +58,9 @@ export default {
             console.error('Error fetching data:', error);
           });
     },
-    onDetail(id) {
-      this.currentId = id;
-      window.open(`/land-eye?id=${id}`, '_blank');
+    onDetail(id,lonlat) {
+      const queryString = `id=${id}&lonlat=${encodeURIComponent(lonlat.join(','))}`;
+      window.open(`/land-eye?${queryString}`, '_blank');
     }
   }
 };

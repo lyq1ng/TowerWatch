@@ -1,21 +1,15 @@
 <template>
   <div class='container3'>
-    <span class="j_1"></span>
-    <span class="j_2"></span>
-    <span class="j_3"></span>
-    <span class="j_4"></span>
     <div class="datechoice2">
-     <div class="data_title">预警类型</div>
-    <a-date-picker v-model="startDate" :show-time="true" @change="generateDateRange" style="width:100px;height:20px;"></a-date-picker>
-    <a-date-picker v-model="endDate" :show-time="true" @change="generateDateRange" style="width:100px;height:20px;"></a-date-picker>
+      <input type="date" v-model="startDate" @change="generateDateRange" >
+      <input type="date" v-model="endDate" @change="generateDateRange">
     </div>
-    <div ref="chart" id="chartLineBox" style="width: 600px; height: 300px;"></div>
+    <div ref="chart" id="chartLineBox" style="width: 700px; height: 350px;"></div>
   </div>
 </template>
 
 <script>
-import * as echarts from 'echarts'
-import * as Date from 'ant-design-vue';
+
 export default {
   data() {
     return {
@@ -23,17 +17,19 @@ export default {
       endDate: '',
       // 指定图表的配置项和数据
       option: {
+        title:{
+          text:'预警数量',
+          left:'center',
+          top:15,
+          textStyle: {
+            color: '#000000' // 标题颜色
+          }
+        },
         tooltip: { // 设置tip提示
           trigger: 'axis'
         },
-        legend: {
-          icon: 'rect',
-          itemWidth: 14,itemHeight: 5,itemGap:10,
-          data: ['工程车辆进入', '人为破坏', '焚烧纵火'],
-          right: '10px',top: '0px',
-          textStyle: {fontSize: 12,color: '#fff'}
+        legend: { top:40,left:'center'// 设置区分（哪条线属于什么）
         },
-        grid: {x:40,y:50,x2:45,y2:40},
         xAxis: { // 设置x轴
           type: 'category',
           boundaryGap: false, // 坐标轴两边不留白
@@ -41,14 +37,16 @@ export default {
           name: '日期', // X轴 name
           nameTextStyle: { // 坐标轴名称的文字样式
             fontSize: 16,
-            padding: [0, 0, 0, -5],
-            color:'black'
+            padding: [0, 0, 0, 0],
+            color:'#000000'
           },
           axisLabel:{
-            color:'black'
+            color:'#000000'
           },
           axisLine:{
-            color:'black'
+            lineStyle:{
+              color:'#000000'
+            }
           }
         },
         yAxis: {
@@ -71,74 +69,8 @@ export default {
             }
           }
         },
-        series: [
-          {
-              name: '工程车辆进入',
-              data: [40, 70, 80, 30, 60, 50, 90],
-              type: 'line',
-              smooth:'true',
-              lineStyle: {normal: {width: 2}},
-              yAxisIndex:0,
-              areaStyle: {
-                normal: {
-                  color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [{
-                    offset: 0,
-                    color: 'rgba(185,150,248,0.3)'
-                  }, {
-                    offset: 0.8,
-                    color: 'rgba(185,150,248,0)'
-                  }], false),
-                  shadowColor: 'rgba(0, 0, 0, 0.1)',
-                  shadowBlur: 10
-                }
-              },
-              itemStyle: {normal: { color: '#B996F8'}},
-            },
-          {
-            name: '人为破坏',
-            data: [70, 40, 50, 80, 30, 90, 50],
-            type: 'line',
-            smooth:true,
-            lineStyle: { normal: {width: 2}},
-            yAxisIndex:0,
-            areaStyle: {
-              normal: {
-                color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [{
-                  offset: 0,
-                  color: 'rgba(3, 194, 236, 0.3)'
-                }, {
-                  offset: 0.8,
-                  color: 'rgba(3, 194, 236, 0)'
-                }], false),
-                shadowColor: 'rgba(0, 0, 0, 0.1)',
-                shadowBlur: 10
-              }
-            },
-            itemStyle: {normal: {color: '#03C2EC'}},
-            },
-          {
-            name: '焚烧纵火',
-            data:[10, 25, 35, 12, 55, 87, 63],
-            type: 'line',
-            smooth: true,
-            lineStyle: {normal: {width: 2}},
-            yAxisIndex:0,
-            areaStyle: {
-              normal: {
-                color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [{
-                  offset: 0,
-                  color: 'rgba(218, 57, 20, 0.3)'
-                }, {
-                  offset: 0.8,
-                  color: 'rgba(218, 57, 20, 0)'
-                }], false),
-                shadowColor: 'rgba(0, 0, 0, 0.1)',
-                shadowBlur: 10
-              }
-            },
-            itemStyle: {normal: {color: '#DA3914'}},
-          }
-          ]
+        series: [{name: '非农', data: [40, 70, 80, 30, 60, 50, 90], type: 'line'},
+          {name: '工程', data: [70, 40, 50, 80, 30, 90, 50], type: 'line',color:'red'}]
       }
     }
   },
@@ -170,64 +102,12 @@ export default {
 }
 </script>
 <style>
- .container3 {
+.container3 {
   display: flex;
   flex-direction: column;
-   position:relative;
-   width: 640px;
-   height: 320px;
-   border: #ffffff solid 2px;
-   background: linear-gradient(rgba(183,245,222,0.5),rgba(128,128,128,0));
-   box-sizing: border-box;
-   margin-left:0;
+}
 
- }
- .datechoice2 {
+.datechoice2 {
   padding-left:40px
- }
- .j_1{
-   width: 23px;
-   height: 23px;
-   position: absolute;
-   top: -2px;
-   left: -2px;
-   border-left: 3px solid #808080;
-   border-top: 3px solid #808080;
- }
- .j_2{
-   width: 23px;
-   height: 23px;
-   position: absolute;
-   top: -2px;
-   right: -2px;
-   border-right: 3px solid #808080;
-   border-top: 3px solid #808080;
- }
- .j_3{
-   width: 23px;
-   height: 23px;
-   position: absolute;
-   bottom: -2px;
-   left: -2px;
-   border-left: 3px solid #808080;
-   border-bottom: 3px solid #808080;
- }
- .j_4{
-   width: 23px;
-   height: 23px;
-   position: absolute;
-   bottom: -2px;
-   right: -2px;
-   border-right: 3px solid #808080;
-   border-bottom: 3px solid #808080;
- }
- .data_title{
-   width: 100%;
-   height: 30px;
-   text-align: center;
-   color: #000000;
-   font-size: 1.3rem;
-   font-Weight: bold;
-   line-height: 40px;
- }
+}
 </style>

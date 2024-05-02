@@ -1,8 +1,9 @@
 <script>
 import MapComponent from "./MapComponent.vue";
 import WarningMessage from "./WarningMessage.vue";
-import {ref,provide} from "vue";
+import {ref, provide, reactive, watch} from "vue";
 import PolygonsDisplay from "./PolygonsDisplay.vue";
+import {useRoute} from "vue-router";
 export default {
   components:{
     PolygonsDisplay,
@@ -10,9 +11,17 @@ export default {
     WarningMessage,
   },
   setup(){
-   let msg = ref('')
-   let coordinate = ref([]);
+    let msg = ref('')
+    let coordinate = ref([]);
     provide('coordinate', coordinate);
+
+    const route = useRoute();
+    console.log('Current route query:', route.query);
+    const cameraId = ref(route.query.id);
+    const coordinates = ref(route.query.lonlat ? route.query.lonlat.split(',').map(Number) : []);
+    provide('cameraId',cameraId);
+    provide('coordinates',coordinates);
+
     function changeWsMsg(data) {
       msg.value = data
       console.log('hello')
@@ -36,27 +45,27 @@ export default {
 
 <template>
   <div class="main-container">
-  <header>
-    <div class="logopart">
-      <img class="logoimg" src="/img/logo.png" alt="">
-      <div class='logo'>塔视守望</div>
-    </div>
-    <img class="headerimg" src="/img/header.png" alt="">
-    <h1 class="website_name">自然资源智能动态监管系统</h1>
-  </header>
-  <div class="container">
-    <div class="left">
-      <div class="left-top">
-        <PolygonsDisplay :msg="msg" @change="changeWsMsg"/>
+    <header>
+      <div class="logopart">
+        <img class="logoimg" src="/img/logo.png" alt="">
+        <div class='logo'>塔视守望</div>
       </div>
-      <div class="left-bottom">
-        <WarningMessage :msg="msg" @change="changeWsMsg" :coordinate="coordinate" @updateCoordinate="handleUpdateCoordinate"/>
+      <img class="headerimg" src="/img/header.png" alt="">
+      <h1 class="website_name">自然资源智能动态监管系统</h1>
+    </header>
+    <div class="container">
+      <div class="left">
+        <div class="left-top">
+          <PolygonsDisplay :msg="msg" @change="changeWsMsg"/>
+        </div>
+        <div class="left-bottom">
+          <WarningMessage :msg="msg" @change="changeWsMsg" :coordinate="coordinate" @updateCoordinate="handleUpdateCoordinate"/>
+        </div>
+      </div>
+      <div class="right">
+        <MapComponent :msg="msg" @change="changeWsMsg" :coordinate="coordinate"/>
       </div>
     </div>
-    <div class="right">
-      <MapComponent :msg="msg" @change="changeWsMsg" :coordinate="coordinate"/>
-    </div>
-  </div>
   </div>
 </template>
 
