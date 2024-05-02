@@ -1,13 +1,15 @@
 <template>
-    <div class="warningmessage" :style="{top:showWarningMessage? '10%':'-100%' ,opacity: showWarningMessage? 0.9:0}">
-        <div class="warningmessage_item"><span>告警信息1</span> <button @click="ishandle" >上传日志</button></div>
-        <div class="warningmessage_item"><span>告警信息2</span> <button @click="ishandle" >上传日志</button></div>
-        <div class="warningmessage_item"><span>告警信息3</span> <button @click="ishandle" >上传日志</button></div>
+  <div class="warningmessage" :style="{top:showWarningMessage? '10%':'-100%' ,opacity: showWarningMessage? 0.9:0}">
+    <div v-for="(item, index) in this.data" :key="item.id" class="warningmessage_item" v-if="this.data.length > 0">
+      <span>告警信息{{ index + 1 }}</span>
+      <button @click="ishandle(item.id)">上传日志</button>
     </div>
-    <handleWarningMessage :showlog="showlog" @close="ishandle" />
+  </div>
+    <handleWarningMessage :showlog="showlog" :fetchData="fetchData" @close="ishandle" />
 </template>
 <script>
   import handleWarningMessage from './handleWarningMessage.vue'
+  import axios from "axios";
   export default {
     components:{
         handleWarningMessage
@@ -19,11 +21,26 @@
       }},
       data(){
       return {
+        data: [],
         showlog:false,
+        index: 0,
       };
     },
+    mounted() {
+      this.fetchData()
+    },
     methods:{
-      ishandle(){
+      fetchData() {
+        axios.get('http://8.148.10.46:3050/api/HandleWarnMsg')
+            .then((response) => {
+              this.data = response.data;
+            })
+            .catch((error) => {
+              console.error('Error fetching data:', error);
+            });
+      },
+      ishandle(index){
+        this.index = index
         this.showlog = !this.showlog
       }
     }

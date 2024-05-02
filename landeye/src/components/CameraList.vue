@@ -5,7 +5,7 @@
       rowKey="id"
   >
     <template v-slot:action="{ record }">
-      <a-button type="primary" class="detail-button" @click="onDetail(record.id,record.lonlat)">查看摄像头信息</a-button>
+      <a-button type="primary" class="detail-button" @click="onDetail(record.lonlat)">查看摄像头信息</a-button>
     </template>
   </a-table>
 </template>
@@ -58,9 +58,8 @@ export default {
             console.error('Error fetching data:', error);
           });
     },
-    onDetail(id,lonlat) {
-      const queryString = `id=${id}&lonlat=${encodeURIComponent(lonlat.join(','))}`;
-      window.open(`/land-eye?${queryString}`, '_blank');
+    onDetail(lonlat) {
+      window.open(`/land-eye?center=${lonlat}`, '_blank');
     }
   }
 };

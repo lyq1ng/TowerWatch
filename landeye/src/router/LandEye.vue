@@ -13,6 +13,10 @@ export default {
   setup(){
     let msg = ref('')
     let coordinate = ref([]);
+    const router = useRoute()
+    const lonlat = router.query?.center
+    console.log(lonlat)
+    const center = lonlat.split(',').map(coord => parseFloat(coord))
     provide('coordinate', coordinate);
 
     const route = useRoute();
@@ -31,7 +35,8 @@ export default {
     return {
       msg,
       changeWsMsg,
-      coordinate
+      coordinate,
+      center,
     }
   },
   methods: {
@@ -63,7 +68,7 @@ export default {
         </div>
       </div>
       <div class="right">
-        <MapComponent :msg="msg" @change="changeWsMsg" :coordinate="coordinate"/>
+        <MapComponent :msg="msg" :center="center" @change="changeWsMsg" :coordinate="coordinate"/>
       </div>
     </div>
   </div>
