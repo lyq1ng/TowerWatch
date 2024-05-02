@@ -1,185 +1,169 @@
 <template>
     <div class="Container">
-      <span class="j_1"></span>
-      <span class="j_2"></span>
-      <span class="j_3"></span>
-      <span class="j_4"></span>
       <div class="data_title">数据处理情况</div>
-      <ul class="zpsl-box" >
-        <li>
-          <span>待审核</span>
-          <span>341条</span>
-        </li>
-        <li>
-          <span>未处理</span>
-          <span>41条</span>
-        </li>
-        <li>
-          <span>累计处理</span>
-          <span>1000条</span>
-        </li>
-     </ul>
+      <div v-for="(item, index) in this.data" :key="item.id" class="item" v-if="this.data.length > 0">
+        <div class="comment-item">
+          <div class="comment-header">
+            <img class="comment-avatar" src="/img/logo.png" alt="Avatar">
+            <div class="comment-info">
+              <div class="comment-author">{{ item.name }}</div>
+              <div class="comment-date">{{ item.time.toString().replace("T", " ").replace("Z", "") }}</div>
+            </div>
+          </div>
+          <div class="comment-content">
+            {{ item.detail }}
+          </div>
+          <div class="comment-actions">
+            <span class="comment-action">Like</span>
+            <span class="comment-action">Overrule</span>
+            <span class="comment-action" @click="showDetails">Detail</span>
+          </div>
+          <!-- 模态框 -->
+          <div v-if="showModal" class="modal">
+            <div class="modal-content">
+              <span class="close" @click="hideModal">&times;</span>
+              <div>{{ item.name }}</div>
+              <div class="comment-content-full">{{ item.detail }}</div> <!-- 显示完整的评论内容 -->
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
 </template>
 
 <script>
-/*import { ref, onMounted } from 'vue';
-import * as echarts from 'echarts';*/
+import axios from "axios";
 
+export default {
+  data() {
+    return {
+      data: '',
+      showModal: false,
+    }
+  },
+  methods:{
+    fetchData() {
+      axios.get('http://localhost:3050/api/GetLog')
+          .then((response) => {
+            this.data = response.data;
+          })
+          .catch((error) => {
+            console.error('Error fetching data:', error);
+          });
+    },
+    showDetails() {
+      this.showModal = !this.showModal; // 点击详情按钮显示模态框
+    },
+    hideModal() {
+      this.showModal = false; // 关闭模态框
+    }
+  },
+  mounted() {
+    this.fetchData()
+  }
+}
 </script>
 <style>
 .Container{
   position:relative;
-  width: 800px;
-  height: 270px;
-  border: #ffffff solid 2px;
-  background: linear-gradient(rgba(183,245,222,0.5),rgba(128,128,128,0));
-  box-sizing: border-box;
+  width: 48%;
+  height: 100%;
+  background: #f1f8f0;
+  border-radius: 40px;
+  overflow-y: auto;
 }
-.zpsl-box li::after{
-  margin-top: 1.2rem;
-  width: 500px;
-  height:300px;
-  border: #1a3f72 solid 2px;
-  background: rgba(41,85,252,.2);
-  position: relative;
-  box-sizing: border-box;
-}
-.zpsl-box li{
-  width: 200px;
-  height: 200px;
-  float: left;
-  //margin: 0 20px;
-  position: relative;
-  margin-left:40px;
-  margin-bottom:10px;
-  top:30px
-}
-.zpsl-box li:nth-of-type(3):before{
-  width: 215px;height: 215px;
-  content: "";
-  position: absolute;
-  top:0;left:0;
-  background:url("/img/bqzlbg002.png") no-repeat;
-  background-size: 100% 100%;
-  animation: animation-rotate 4s linear infinite;
-}
-.zpsl-box li:nth-of-type(2):before{
-  width: 215px;height: 215px;
-  content: "";
-  position: absolute;
-  top:0;left:0;
-  background:url("/img/bqzlbg001.png") no-repeat;
-  background-size: 100% 100%;
-  animation: animation-rotate1 4s linear infinite;
-}
-.zpsl-box li:nth-of-type(1):before{
-  width: 215px;height: 215px;
-  content: "";
-  position: absolute;
-  top:0;left:0;
-  background:url("/img/bqzlbg002.png") no-repeat;
-  background-size: 100% 100%;
-  animation: animation-rotate 4s linear infinite;
-}
-@keyframes animation-rotate {
-  0% {
-    transform: rotatez(360deg)
-  }
-  100% {
-    transform: rotatez(0deg)
-  }
-}
-@keyframes animation-rotate1 {
-  0% {
-    transform: rotatez(0deg)
-  }
-  100% {
-    transform: rotatez(360deg)
-  }
-}
-@keyframes animation-rotate2 {
-  0% {
-    transform: rotatez(0deg)
-  }
-  100% {
-    transform: rotatez(360deg)
-  }
-}
-.zpsl-box li span{
-  display: block;
-  width: 100%;
-  text-align: center;
-  color:#ffffff;
-  font-size: 18px;
-}
-.zpsl-box li span:nth-of-type(1){
-  font-size: 22px;
-  font-weight: bold;
-  margin-top: 60px;
-}
-.zpsl-box li span:nth-of-type(2){
-  margin-top: 40px;
-  font-size: 26px;
-}
-.zpsl-box li span:nth-of-type(2){
-  margin-top: 40px;
-  font-size: 26px;
-}
-.zpsl-box li:nth-of-type(1) span:nth-of-type(1){
-  color:#9DF9FC
-}
-.zpsl-box li:nth-of-type(2) span:nth-of-type(1){
-  color:#D3FCA0
-}
-.zpsl-box li:nth-of-type(1) span:nth-of-type(1){
-  color:#9DF9FC
-}
-.j_1{
-  width: 23px;
-  height: 23px;
-  position: absolute;
-  top: -2px;
-  left: -2px;
-  border-left: 3px solid #808080;
-  border-top: 3px solid #808080;
-}
-.j_2{
-  width: 23px;
-  height: 23px;
-  position: absolute;
-  top: -2px;
-  right: -2px;
-  border-right: 3px solid #808080;
-  border-top: 3px solid #808080;
-}
-.j_3{
-  width: 23px;
-  height: 23px;
-  position: absolute;
-  bottom: -2px;
-  left: -2px;
-  border-left: 3px solid #808080;
-  border-bottom: 3px solid #808080;
-}
-.j_4{
-  width: 23px;
-  height: 23px;
-  position: absolute;
-  bottom: -2px;
-  right: -2px;
-  border-right: 3px solid #808080;
-  border-bottom: 3px solid #808080;
-}
-.data_title{
-  width: 100%;
-  height: 30px;
-  text-align: center;
-  color: #000000;
-  font-size: 2.2rem;
-  font-Weight: bold;
-  line-height: 40px;
+.data_title {
+  height: 10%;
 }
 
+.comment-item {
+  border-bottom: 1px solid #ccc;
+  padding: 20px;
+  border-radius: 20px;
+  border-color: #4da479;
+}
+
+.comment-header {
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.comment-avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  margin-right: 10px;
+}
+
+.comment-author {
+  font-weight: bold;
+}
+
+.comment-date {
+  font-size: 0.8em;
+  color: #888;
+}
+
+.comment-content {
+  margin-bottom: 10px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  max-width: 300px;
+}
+
+.comment-actions {
+  display: flex;
+}
+
+.comment-action {
+  margin-right: 10px;
+  color: #888;
+  cursor: pointer;
+}
+
+.comment-action:hover {
+  color: #333;
+}
+
+.modal {
+  position: fixed;
+  z-index: 1;
+  left: 50%;
+  top: 50%;
+  width: 30%;
+  height: 30%;
+  overflow: auto;
+  background-color: rgb(238, 246, 234);
+  transform: translate(-50%, -50%);
+  border-radius: 30px;
+}
+
+.modal-content {
+  background-color: #fefefe;
+  margin: auto;
+  padding: 20px;
+  border: 1px solid #888;
+  width: 80%;
+  max-width: 600px; /* 可根据需要调整模态框的最大宽度 */
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.close {
+  color: #aaa;
+  float: right;
+  font-size: 28px;
+  font-weight: bold;
+}
+.close:hover,
+.close:focus {
+  color: black;
+  text-decoration: none;
+  cursor: pointer;
+}
 </style>
 
