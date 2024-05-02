@@ -21,12 +21,14 @@ export default {
   name: 'MapComponent',
   props: {
     msg: String,
+    center: [],
   },
   setup(props, context) {
     let {msg: receive} = toRefs(props);
     var socket_data = ref('');
     var curve = ref('');
     var lonlat = ref('');
+    const center = props.center
     watch(receive, watchHandle);
 
     const Points = [
@@ -164,7 +166,7 @@ export default {
       map = new Map({
         layers: Layers,
         view: new View({
-          center: fromLonLat(defaultCoordinate),
+          center: fromLonLat(center),
           zoom: 14,
           minZoom: 8,
           maxZoom: 18

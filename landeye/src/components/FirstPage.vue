@@ -1,5 +1,5 @@
 <script>
-import { onMounted } from 'vue';
+import { onMounted, ref } from 'vue';
 import 'ol/ol.css';
 import Map from 'ol/Map';
 import View from 'ol/View';
@@ -19,6 +19,7 @@ export default {
     let baseLayer = [];
     let addLayer = [];
     let WarnPoint = [];
+    let featureCoords = ref('')
     const points = [
       [118.759167,24.772778],
       [118.699167,24.772778],
@@ -83,6 +84,7 @@ export default {
           var coordinate = feature.getGeometry().getCoordinates();
           var content = '<p>经度: ' + coordinate[0] + '</p>' +
               '<p>纬度: ' + coordinate[1] + '</p>';
+          featureCoords.value = coordinate[0] + ',' + coordinate[1]
           var popup = new Overlay({
             id: 0,
             element: document.getElementById('popup'),
@@ -167,8 +169,8 @@ export default {
       }
     }//获取告警点位并添加
 
-    function openCameraPage(){
-      window.open('/land-eye', '_blank');
+    function openCameraPage(coords){
+      window.open(`/land-eye?center=${coords}`, '_blank');
     }
     function closePopUp(){
       map.getOverlayById(0).setPosition(undefined)
@@ -180,6 +182,7 @@ export default {
       handleSelect,
       closePopUp,
       openCameraPage,
+      featureCoords,
     };
   }
 }
@@ -190,7 +193,7 @@ export default {
     <div id="popup" class="ol-popup" >
 <!--      <a href="#" id="popup-closer" class="ol-popup-closer"></a>-->
       <div id="popup-content"></div>
-      <a-button class="button" @click="openCameraPage"><span>进入摄像头</span></a-button>
+      <a-button class="button" @click="openCameraPage(featureCoords)"><span>进入摄像头</span></a-button>
       <a-button  class="button" @click="closePopUp">关闭</a-button>
     </div>
     <div class="btn-group">

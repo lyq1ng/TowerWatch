@@ -1,8 +1,16 @@
 <template>
     <div class="handlewarningmessage" :style="{top:showlog? '10%':'-100%', zIndex:showlog?4:-10,opacity:showlog?0.95:0}">
-        <el-input class='inputitem'  placeholder="处理人姓名" />
-        <el-date-picker class='dateitem' type="datetime" size=large placeholder="处理时间"></el-date-picker>
-        <el-input class='descriptionitem' placeholder="处理情况说明"  maxlength="100" show-word-limit rows=8  type="textarea"/>
+      <el-input class='inputitem' v-model="name" placeholder="处理人姓名" />
+      <el-date-picker
+          class='dateitem'
+          v-model="time"
+          type="datetime"
+          size=large
+          placeholder="处理时间"
+          value-format="YYYY-MM-DD HH:MM"
+      >
+      </el-date-picker>
+      <el-input class='descriptionitem' v-model="detail" placeholder="处理情况说明"  maxlength="100" show-word-limit rows=8  type="textarea"/>
         <div class="button-container">
           <el-button color="#EBEFA5" round  >提交图片</el-button>
           <el-button color="#EBEFA5" round  @click="message" >提交日志</el-button>
@@ -20,14 +28,54 @@
       showlog:{
           type: Boolean,
           default: true,
-        }
+        },
+      index: {
+        type: Number,
+        default: 0,
+      },
+      fetchData: {
+        type: Function,
+        required: true,
+      }
+    },
+    data() {
+      return {
+        name: '',
+        time: '',
+        detail: '',
+      }
     },
     methods:{
       message(){
+        const data = {
+          name: this.name,
+          time: this.time,
+          detail: this.detail,
+          index: this.index,
+        };
+        console.log(data)
+
+        // 发送 POST 请求到后端
+        fetch('http://8.148.10.46:3050/api/HandlePost', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify(data)
+        })
+            .then(response => {
+              // 处理响应
+              console.log(response);
+            })
+            .catch(error => {
+              // 处理错误
+              console.error('Error:', error);
+            });
         ElMessage({
           message: '成功提交日志',
           type: 'success',
-        }),
+        })
+        this.fetchData()
         this.$emit('close')
         }
   }}
