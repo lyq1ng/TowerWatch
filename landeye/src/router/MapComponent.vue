@@ -450,12 +450,10 @@ export default {
   width: 100%;
   height: 100%;
 }
-
 .btn-group {
-  margin-top: 30px;
   position: absolute;
-  top: 8.5%;
-  right: 3%;
+  top: 2%;
+  right: 5%;
   z-index: 1000;
 }
 .btn {
@@ -475,44 +473,45 @@ export default {
   background-color: #cdeec2;
   color: #262525;
 }
-.select {
-  height: 40px;
-  margin-top: 11px;
-  display: flex;
-  left: 700px;
-  position: absolute;
-  z-index: 1000;
-}
 #legend {
-  height: 250px;
-  width: 200px;
+  height: 35vh;
+  width: 25vh;
   background-color: #c6debd;
   position: absolute;
-  bottom: 1%;
-  right: 10px;
-  opacity: 80%;
+  bottom: 0.5%;
+  right: 0.5%;
+  opacity: 0.8;
   z-index: 1000;
   flex-direction: column;
-  border-radius: 10px;
+  border-radius: 1vh;
 }
 .legend-title {
-  color: #424242;
+  color:#1c1c1c;
   font-weight:bold;
-  font-size: 22px;
-  margin: 10px;
+  font-size: 3.2vh;
+  margin-top: 2vh;
+  padding-left: 1vh;
 }
 .legend-item {
   display: flex;
   align-items: center;
-  padding-left: 10px;
-  margin-bottom: 10px;
+  padding-left: 2vh;
+  margin-bottom: 1vh;
   img {
-    margin-right: 10px;
+    margin-right: 1vh;
   }
   h3 {
-    font-size: 18px;
+    font-size: 2.5vh;
     font-weight: bold;
-    color: #424242;
+    color: #1c1c1c;
   }
+}
+.select {
+  top: 2%;
+  display: flex;
+  left: 5%;
+  position: absolute;
+  width:50vh;
+  z-index: 1000;
 }
 </style>

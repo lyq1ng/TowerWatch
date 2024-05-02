@@ -333,7 +333,7 @@ export default {
   }
 }
 .select {
-  top: 2vh;
+  top: 2%;
   display: flex;
   left: 1%;
   position: absolute;
@@ -354,7 +354,6 @@ export default {
   min-width: 280px;
   display: none;
 }
-
 .ol-popup:after,
 .ol-popup:before {
   top: 100%;
@@ -365,14 +364,12 @@ export default {
   position: absolute;
   pointer-events: none;
 }
-
 .ol-popup:after {
   border-top-color: white;
   border-width: 10px;
   left: 48px;
   margin-left: -10px;
 }
-
 .ol-popup:before {
   border-top-color: #cccccc;
   border-width: 11px;

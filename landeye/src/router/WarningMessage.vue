@@ -225,8 +225,8 @@ export default {
   <div class="content">
     <div class="list">
       <div class="list_top">
-        <div style="font-size: 22px;padding:6px 0;color:#6c6a6a;margin-left:110px;font-weight: bold">告警信息栏</div>
-        <div class="title">
+        <div class="title">告警信息栏</div>
+        <div class="subtitle">
           <span>id</span>
           <span class="type">类型</span>
           <span class="date">日期</span>
@@ -275,26 +275,30 @@ export default {
 <style scoped>
 .btn {
   background-image: linear-gradient(to right, #25aae1, #40e495);
-  box-shadow: 0 4px 15px 0 rgba(49, 196, 190, 0.75);
+  box-shadow: 0 0.5vh 2vh 0 rgba(49, 196, 190, 0.75);
   border: 0;
-  width: 65px;
-  height: 30px;
-  font-size: 18px;
+  width: 4.5vw;
+  height: 4vh;
+  margin-left:2vh;
+  font-size: 1.1vw;
   font-weight: bold;
-  border-radius: 50px;
+  border-radius: 3vh;
   color: #fafafa;
   outline: none;
   cursor: pointer;
 }
 .btn:hover {
-  transform: translateY(-2px); /* 悬停时按钮向上移动 2px */
+  transform: translateY(-0.3vh); /* 悬停时按钮向上移动 2px */
 }
 
 .btn:active {
   transform: translateY(1px); /* 点击时按钮向下移动 1px */
-  box-shadow: 0 1px 3px 0 rgba(49, 196, 190, 0.75); /* 添加点击时的阴影效果 */
+  box-shadow: 0 0.5vh 2vh 0 rgba(49, 196, 190, 0.75); /* 添加点击时的阴影效果 */
 }
 .btn-group {
+  position: absolute;
+  top:0;
+  left:0;
   width: 100%;
   height: 12%;
   background-color: white;
@@ -303,84 +307,98 @@ export default {
   align-items: center;
 }
 .content {
-  display: flex;
-  height: 88%;
+
+  height: 100%;
+  width:100%;
   border-radius: 10px;
-}
-.title {
-  padding: 0 30px;
-  font-weight: bold;
-  color:#6c6a6a;
-  height: 30px;
-  margin-left: 10px;
-  width:98%;
-  border-bottom:2px solid #b2afaf;
-  .type {
-    padding-left: 70px;
-  }
-  .date {
-    padding-left:90px;
-  }
 }
 .list {
-  width: 65%;
-  height: 100%;
-  position: relative;
+  width: 60%;
+  height: 88%;
+  top:12%;
+  left:0;
+  position: absolute;
   background-color: #ceeec2;
-  border-radius: 10px;
+  border-radius: 1vh
+}
+.list_top {
+  position: absolute;
+  top:0;
+  left:0;
+  height:25%;
+  width: 100%;
+  font-size: 1vw;
+  text-align: center;
 }
 .listbody {
+  position: absolute;
+  top:25%;
+  left:0;
+  width:100%;
   overflow-y: auto;
-  height:180px;
+  height:75%;
+}
+.title {
+  height:60%;
+  font-size: 1.5vw;
+  padding:1vh 0;
+  color:#6c6a6a;
+  font-weight: bold;
+}
+.subtitle {
+  height:40%;
+  padding: 0 5vh;
+  font-weight: bold;
+  color:#6c6a6a;
+  width:100%;
+  display: flex;
+  border-bottom:0.25vh solid #b2afaf;
+  .type {
+  margin-left: 4vw;
+  }
+  .date {
+  margin-left:6vw;
+  }
 }
 .custom-item {
-  margin-left: 10px;
-  width:94%;
-  border-bottom: 2px dashed #c2bfbf;
+  margin-left: 0.5vw;
+  width:96%;
+  border-bottom: 0.25vh dashed #c2bfbf;
 }
-
 .custom-item:hover {
   background-color: #99d088;
 }
-
-.list_top {
-  width: 100%;
-  font-size: 16px;
-  text-align: left;
-}
-
 .list-item-column {
-  height:30px;
+  height:4vh;
   text-align: left;
   font-weight: bold;
-  padding-left: 10px;
-  padding-top: 3px;
+  padding-left: 0.5vw;
+  padding-top: 0.5vh;
   color:#6c6a6a;
-  font-size:16px;
+  font-size:1.1vw;
 }
-
 .message {
+  padding-top: 2vh;
+  position: absolute;
   background-color: #ceeec2;
-  margin-left: 10px;
-  width: 54%;
-  height: 100%;
-  display: flex;
+  top:12%;
+  left:61%;
+  width:39%;
+  height: 88%;
   flex-direction: column;
   justify-content: center;
-  border-radius: 10px;
+  border-radius: 1vh;
   color:#6c6a6a;
 }
-
 .message h3 {
-  font-size: 16px;
+  font-size: 1vw;
   font-weight: bold;
   text-align: left;
-  margin-left: 10px;
+  margin-left: 1vw;
 }
-/* 为整个页面设置滚动条样式 */
 /* 滚动条整体部分 */
 ::-webkit-scrollbar {
-  width: 10px;
+  width: 0.7vw;
 }
 
 /* 滚动条滑块 */

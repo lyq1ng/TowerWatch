@@ -171,7 +171,7 @@
     margin-top: 1vh;
   }
   .logoimg {
-    width:5.5vh;
+    width:2.7vw;
     height: 5.5vh;
   }
   #item1::after {

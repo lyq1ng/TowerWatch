@@ -81,24 +81,28 @@ body {
   padding: 0;
   font-family: Arial, sans-serif;
 }
-
 header {
+  position: absolute;
+  width:100%;
   background-color: #ACD59F;
   color: #fff;
   padding: 10px;
   text-align: center;
   height: 10%;
+  z-index: 100;
 }
-
 .container {
+  position: absolute;
   display: flex;
   flex-direction: row;
+  top:10%;
   height: 90%;
+  width:100%;
 }
 .website_name {
   position:absolute;
   right:10%;
-  top:2%;
+  top:15%;
   font-size: 2vw;
   font-family: 'Open Sans', sans-serif;
   font-weight: bold;
@@ -113,40 +117,61 @@ header {
   opacity:0.85
 }
 .left {
+  position:absolute;
   display: flex;
   flex-direction: column;
+  left:0;
+  top:0;
   padding: 10px;
   width: 40%;
+  height: 100%;
   background-color: white;
 }
 
 .left-top {
+  display: flex;
+  position: absolute;
   background-color: #eaeaea;
+  left:0;
+  top:0;
+  width: 100%;
   height: 55%;
   border-radius: 10px;
 }
-
 .left-bottom {
+  display: flex;
+  position: absolute;
+  left:0;
+  top:55%;
   height: 45%;
+  width:100%;
   border-radius: 10px;
+  flex-direction: column;
 }
 
 .right {
+  left:40%;
+  position: absolute;
   background-color: #f9f9f9;
   width: 60%;
-  padding: 10px;
+  padding: 0.5vh;
+  height: 100%;
 }
 .logopart{
   display:flex;
+  position: absolute;
+  top:15%;
+  left:2%;
 }
 .logo {
-  font-size: 26px;
+  font-size: 1.5vw;
   font-weight: bold;
   color:#287042;
-  margin-left: 15px;
-  margin-top: 5px;
+  margin-left:0.5vw;
+  margin-top: 1vh;
 }
 .logoimg {
-  width:45px;
+  width:2.7vw;
+  height: 5.5vh;
 }
 </style>

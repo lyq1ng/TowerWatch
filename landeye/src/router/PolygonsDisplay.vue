@@ -789,24 +789,23 @@ export default {
 .btn1 {
   display:flex;
   background-image: linear-gradient(to right, #25aae1, #40e495);
-  box-shadow: 0 4px 15px 0 rgba(49, 196, 190, 0.75);
+  box-shadow: 0 0.5vh 2vh 0 rgba(49, 196, 190, 0.75);
   border: 0;
-  height: 30px;
-  font-size: 16px;
+  height: 4vh;
+  font-size: 1.1vw;
   font-weight: bold;
-  border-radius: 50px;
+  border-radius: 3vh;
   color: #fafafa;
   outline: none;
   cursor: pointer;
 }
 .btn1:hover {
-  transform: translateY(-2px); /* 悬停时按钮向上移动 2px */
+  transform: translateY(-0.3vh); /* 悬停时按钮向上移动 2px */
   color: white;
 }
-
 .btn1:active {
   transform: translateY(1px); /* 点击时按钮向下移动 1px */
-  box-shadow: 0 1px 3px 0 rgba(49, 196, 190, 0.75); /* 添加点击时的阴影效果 */
+  box-shadow: 0 0.5vh 2vh 0 rgba(49, 196, 190, 0.75); /* 添加点击时的阴影效果 */
 }
 </style>
   
