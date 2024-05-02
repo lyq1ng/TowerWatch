@@ -8,6 +8,9 @@ import * as ElementPlusIconsVue from '@element-plus/icons-vue';
 import * as echarts from 'echarts'
 import 'ant-design-vue/dist/reset.css'
 
+
+console.log("Testing if main.js is loaded");
+
 const app = createApp(App)
 app.config.globalProperties.$echarts = echarts
 
@@ -24,3 +27,4 @@ Object.keys(ElementPlusIconsVue).forEach(key => {
 });
 
 app.mount('#app')
+

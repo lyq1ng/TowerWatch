@@ -3,10 +3,10 @@
 
     <div class="container1">
         <LineChart />
-        <RingChart />
+        <Histogram />
       </div>
       <div class="container2">
-        <Histogram />
+        <RingChart />
         <PieChart />
       </div>
     </div>
@@ -32,19 +32,23 @@
   .container {
     width: 100%;
     height: 100%;
-    padding-top:10px;
+    display: flex;
+    justify-content: space-between;
   }
   .container1 {
     display: flex;
-    align-items: center;
+    width: 42%;
+    height: 100%;
+    flex-direction: column;
     justify-content: space-between;
-    margin:0 20px 0 20px;
+    align-content: center;
   }
   .container2 {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    margin:0 20px 0 20px;
+    width: 55%;
+    height: 100%;
   }
 
   </style>

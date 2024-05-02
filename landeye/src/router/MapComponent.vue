@@ -474,8 +474,8 @@ export default {
   color: #262525;
 }
 #legend {
-  height: 35vh;
-  width: 25vh;
+  height: 250px;
+  width: 200px;
   background-color: #c6debd;
   position: absolute;
   bottom: 0.5%;
@@ -483,7 +483,7 @@ export default {
   opacity: 0.8;
   z-index: 1000;
   flex-direction: column;
-  border-radius: 1vh;
+  border-radius: 10px;
 }
 .legend-title {
   color:#1c1c1c;
@@ -498,20 +498,12 @@ export default {
   padding-left: 2vh;
   margin-bottom: 1vh;
   img {
-    margin-right: 1vh;
+    margin-right: 10px;
   }
   h3 {
-    font-size: 2.5vh;
+    font-size: 18px;
     font-weight: bold;
-    color: #1c1c1c;
+    color: #424242;
   }
-}
-.select {
-  top: 2%;
-  display: flex;
-  left: 5%;
-  position: absolute;
-  width:50vh;
-  z-index: 1000;
 }
 </style>
