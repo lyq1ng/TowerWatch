@@ -1,32 +1,30 @@
 <template>
   <div class="container4">
+    <div class="data_title">预警数量</div>
     <div class="datechoice1">
-      <input type="date" v-model="startDate" @change="generateDateRange">
-      <input type="date" v-model="endDate" @change="generateDateRange">
+      <a-date-picker v-model="startDate" @change="generateDateRange" style="width:100px;height:20px;margin-left:25px"></a-date-picker>
+      <a-date-picker v-model="endDate" @change="generateDateRange" style="width:100px;height:20px;"></a-date-picker>
     </div>
-    <div ref="echartsRef" id="Histogram" style="width: 600px; height: 260px;"></div>
+    <div ref="echartsRef" id="Histogram" style="width: 90%; height: 100%;"></div>
   </div>
 </template>
 
 <script>
-//import { ref, onMounted } from 'vue';
-//import * as echarts from 'echarts';
+import * as Date from 'ant-design-vue';
 export default {
-  name: 'TypeNum',
-  data() {
-    return {
+  name:'TypeNum',
+  data(){
+    return{
       startDate: '',
       endDate: '',
-      option: {
-        title: {
-          text: '预警类型', // 标题
-          left: 'center', // 标题居中
-          textStyle: {
-            color: '#222' // 标题颜色
-          }
-        },
+      option : {
+
         tooltip: { // 设置tip提示
-          trigger: 'axis'
+          trigger: 'item',
+          backgroundColor: "rgba(255,255,255,0.1)",
+          axisPointer: {
+            type: "none"
+          }
         },
         grid: {
           top: '14%',
@@ -35,45 +33,84 @@ export default {
           bottom: '10%',
           containLabel: true
         },
-        legend: {},
+        legend:{},
         xAxis: {
-          name: '日期',
+          offset: 35,
+          name:'日期',
           type: 'category',
           data: [], // X 轴数据
           axisLabel: {
-            color: '#000000' // X 轴标签颜色
+            show: true,
+            textStyle: {
+              color: "#b6b5ab",
+            },
+            interval: 0,
           },
           axisLine: {
-            lineStyle: {
-              color: '#000000' // X 轴线颜色
-            }
+            show: false
+          },
+          splitLine: {
+            show: false,
+          },
+          axisTick: {
+            show: false,
           },
           nameTextStyle: { // 坐标轴名称的文字样式
             fontSize: 12,
             padding: [0, 0, 0, -15],
-            color: '#000000'
+            color:'black'
           }
         },
         yAxis: {
-          name: '数量',
+          name:'数量',
           type: 'value',
           axisLabel: {
-            color: '#000' // Y 轴标签颜色
+            show: true,
+            textStyle: {
+              color: "#b6b5ab",
+            },
           },
           axisLine: {
-            lineStyle: {
-              color: '#000' // Y 轴线颜色
-            }
+            show: false,
           },
           splitLine: {
-            lineStyle: {
-              color: '#000000' // 分隔线颜色
-            }
-          }
+            show: false,
+          },
+          axisTick: {
+            show: false,
+          },
         },
         series: [
-          { data: [120, 200, 150, 80, 70, 110, 130], type: 'bar', itemStyle: { color: '#00b0ff' } },
-          { data: [150, 210, 120, 70, 80, 116, 140], type: 'bar', itemStyle: { color: '#808080' } },
+          {
+            data: [150, 210, 120, 70, 80, 116, 140],
+            type: 'bar',
+            barWidth: "60%",
+            barGap: "-100%",
+            itemStyle: {
+              normal: {
+                color: {
+                  type: "linear",
+                  x: 1,
+                  y: 1,
+                  x2: 0,
+                  y2: 0,
+                  colorStops: [
+                    {
+                      offset: 0,
+                      color: "#00c6f4", // 0% 处的颜色
+                    },
+                    {
+                      offset: 1,
+                      color: "#00db97", // 100% 处的颜色
+                    },
+                  ],
+                  globalCoord: false, // 缺省为 false
+                },
+                borderWidth: 0,
+                barBorderRadius: [50, 50, 0, 0],
+              },
+            },
+          },
         ]
       },
     }
@@ -86,6 +123,9 @@ export default {
       const myEcharts = this.$echarts.init(document.getElementById('Histogram'), 'vintage')
       // 使用刚指定的配置项和数据显示图表。
       myEcharts.setOption(this.option, true)
+      window.addEventListener('resize', () => {
+        myEcharts.resize();
+      });
     },
     generateDateRange() {
       const startDate = new Date(this.startDate);
@@ -109,9 +149,26 @@ export default {
 .container4 {
   display: flex;
   flex-direction: column;
+  position:relative;
+  width: 100%;
+  height: 48%;
+  background: #f1f8f0;
+  border-radius: 40px;
+  margin-left:0;
+  margin-bottom:10px;
 }
-
 .datechoice1 {
-  padding-left: 16px
+  padding-left:16px
+}
+.data_title{
+  width: 100%;
+  height: 30px;
+  text-align: center;
+  color: #000000;
+  font-size: 1.3rem;
+  font-Weight: bold;
+  line-height: 40px;
 }
 </style>
+
+
