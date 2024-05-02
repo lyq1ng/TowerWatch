@@ -1,26 +1,26 @@
 <template>
-  <div class="common-layout">
     <el-container class="mainbackground">
-      <el-header class="header">
-          <div class="menu-bar" >
-              <div class="logopart">
-                <img class="logoimg" src="/img/logo.png" alt="">
-                <div class='logo'>塔视守望</div>
-              </div>
-            <li id="item1">
-              <a @click="goToMenu('/menu/firstpage')">
-                <el-icon><HomeFilled /></el-icon>  首页</a>
-            </li >
-            <li id="item2">
-              <a @click="goToMenu('/menu/camera')">
-                <el-icon><CameraFilled /></el-icon>  摄像头列表</a>
-            </li>
-            <li id="item3">
-              <a @click="goToMenu('/menu/statistics')">
-              <el-icon><Histogram /></el-icon>  数据可视化</a>
-            </li>
-
+      <div class="menu-bar" >
+        <div class="logopart">
+          <img class="logoimg" src="/img/logo.png" alt="">
+          <div class='logo'>塔视守望</div>
         </div>
+        <div class="menu_content">
+        <div id="item1" class="menu_item" @click="goToMenu('/menu/firstpage')">
+          <el-icon class="menu_icon"><HomeFilled /></el-icon>
+          <a class="menuitem_text">首页</a>
+        </div >
+        <div id="item2" class="menu_item" @click="goToMenu('/menu/camera')">
+          <el-icon class="menu_icon"><CameraFilled /></el-icon>
+          <a class="menuitem_text" >摄像头列表</a>
+        </div>
+        <div id="item3" class="menu_item" @click="goToMenu('/menu/statistics')">
+          <el-icon class="menu_icon"><Histogram /></el-icon>
+          <div class="menuitem_text" >数据可视化</div>
+        </div>
+        </div>
+      </div>
+      <el-header class="header">
         <div class="website_name">
           自然资源智能动态监管系统
         </div>
@@ -30,9 +30,7 @@
           <div id="changelightness_icon" :class="{ 'bx bxs-sun': !isclick, 'bx bx-moon': isclick }"   @click="changelightness"> </div>
           <WarningMessage :showWarningMessage="showWarningMessage" />
           <div id="user_icon" class='bx bxs-user'></div>
-
       </div>
-
       </el-header>
       <el-main class="main">
         <div class='content'>
@@ -40,7 +38,6 @@
         </div>
       </el-main>
     </el-container>
-  </div>
 </template>
 <script>
   import WarningMessage from './WarningMessage.vue' 
@@ -71,104 +68,118 @@
 </script>
 
 <style>
-  .common-layout {
-    width: 100vw;
-    height: 100vh;
-  }
-  .el-header {
-    height:45px;
-    z-index:2;
-  }
-  .icon_logo {
-    display:flex;
-    justify-content: space-between;
-    position:fixed;
-    right:2%;
-    top:2.5%;
-    width:180px;
-  }
   .mainbackground {
-    //background-image: linear-gradient(120deg, #d4fc79 0%, #96e6a1 100%);
-    background-color:#ACD59F;
-    height:100%;
-  }
+     width: 100vw;
+     height: 100vh;
+     //background-image: linear-gradient(120deg, #d4fc79 0%, #96e6a1 100%);
+     background-color:#ACD59F;
+   }
   html, body, #app {
     height: 100vh;
     width: 100vw;
     overflow-x: hidden;
   }
   .header {
+    position:absolute;
+    display:flex;
     height: 10%;
     padding: 0;
+    width:88%;
+    left:12%;
+    z-index:2;
   }
   .main {
+    display: flex;
+    position:absolute;
     height: 90%;
     padding: 0;
-  }
-  .content {
-    display:flex;
-    background-color:rgba(233, 237, 214, 0.8);
-    position:relative;
-    height:100%;
-    width:86%;
-    border-radius: 10px;
-    padding:10px;
-    z-index:1;
-    margin-left:200px;
-  }
-  .el-icon {
-    vertical-align: middle;
-    font-size:25px;
+    left:12%;
+    width:89%;
+    top:10%;
   }
   .menu-bar {
     display: flex;
     flex-direction: column;
-    position: fixed;
+    position: absolute;
     left: 0;
     top: 0;
-    gap: 27px;
-    border-radius: 10px;
+    gap: 10vh;
+    border-radius: 1vh;
     height: 100%;
     background-color: rgba(215, 217, 207, 0.8);
     //background-color: rgba(172,213,159,0.4);
-    width: 200px;
+    width: 12%;
     align-items: center;
     padding: 20px 0;
     z-index:2;
     }
-  .menu-bar li {
-    list-style-type: none;
-    height:6vh;
-    width:100%;
-    background-color: transparent;
-    }
-  .menu-bar li a {
-    color: #777575;
-    text-decoration: none;
-    padding-top: 14px;
-    font-size: 21px;
-    font-weight: bold;
-    padding-left: 20px;
-    padding-right: 10px;
-    display: block;
+  .menu_content {
+    position:absolute;
+    top:12%;
+    display: flex;
+    flex-direction: column;
+    gap: 3vh;
+    border-radius: 1vh;
+    width: 100%;
+    align-items: center;
   }
-  .menu-bar li a:hover {
-    color: #fffdfd
-  }
-  .menu-bar li :hover {
-    list-style-type: none;
+  .menu_item {
+    display: flex;
     height:7vh;
     width:100%;
+    background-color:transparent;
+    align-items:center;
+    padding-left: 1.5vw;
+    }
+  .menuitem_text  {
+    color: #777575;
+    text-decoration: none;
+    font-size: 1.25vw;
+    font-weight: bold;
+    display: block;
+  }
+  .menu_item:hover {
+    width:100%;
+    display: flex;
+    list-style-type: none;
+    height:7vh;
+    align-items:center;
     background-color: rgba(57, 203, 124, 0.4);
   }
-
+  .menu_item:hover .menuitem_text{
+     color: #fffdfd
+   }
+  .menu_icon {
+    color: #777575;
+    font-size: 3.5vh;
+    font-weight: bold;
+  }
+  .menu_item:hover .menu_icon{
+    color: #fffdfd
+  }
+  .logopart{
+    display:flex;
+    position: absolute;
+    top:2.5%;
+    left:10%;
+  }
+  .logo {
+    font-size: 1.5vw;
+    font-weight: bold;
+    color:#287042;
+    margin-left:0.5vw;
+    margin-top: 1vh;
+  }
+  .logoimg {
+    width:5.5vh;
+    height: 5.5vh;
+  }
   #item1::after {
     content: ''; /* 伪元素内容为空 */
     position: absolute; /* 绝对定位 */
-    top:90px; /* 顶部与li元素顶部对齐 */
     right: 0; /* 右侧与li元素右侧对齐 */
-    width: 8px; /* 伪元素的宽度 */
-    height: 52px; /* 伪元素的高度与li元素相同 */
+    width: 1vh; /* 伪元素的宽度 */
+    height:7vh; /* 伪元素的高度与li元素相同 */
     background-color: #2fb06b; /* 伪元素的背景颜色 */
     opacity: 0; /* 初始透明度为0，使其不可见 */
   }
@@ -178,10 +189,9 @@
   #item2::after {
     content: ''; /* 伪元素内容为空 */
     position: absolute; /* 绝对定位 */
-    top:162px; /* 顶部与li元素顶部对齐 */
     right: 0; /* 右侧与li元素右侧对齐 */
-    width: 8px; /* 伪元素的宽度 */
-    height: 52px; /* 伪元素的高度与li元素相同 */
+    width: 1vh; /* 伪元素的宽度 */
+    height: 7vh; /* 伪元素的高度与li元素相同 */
     background-color: #2fb06b; /* 伪元素的背景颜色 */
     opacity: 0; /* 初始透明度为0，使其不可见 */
   }
@@ -191,37 +201,54 @@
   #item3::after {
     content: ''; /* 伪元素内容为空 */
     position: absolute; /* 绝对定位 */
-    top:234px; /* 顶部与li元素顶部对齐 */
     right: 0; /* 右侧与li元素右侧对齐 */
-    width: 8px; /* 伪元素的宽度 */
-    height: 52px; /* 伪元素的高度与li元素相同 */
+    width: 1vh; /* 伪元素的宽度 */
+    height: 7vh; /* 伪元素的高度与li元素相同 */
     background-color: #2fb06b; /* 伪元素的背景颜色 */
     opacity: 0; /* 初始透明度为0，使其不可见 */
   }
   #item3:hover::after {
     opacity: 0.5; /* 悬停时透明度变为0.5，使其可见 */
   }
+  .content {
+    display:flex;
+    background-color:rgba(233, 237, 214, 0.8);
+    position:absolute;
+    height:100%;
+    width:95%;
+    border-radius: 1vh;
+    padding:10px;
+    z-index:1;
+  }
   .website_name {
-    position:fixed;
-    right:65%;
-    top:3%;
-    font-size: 28px;
+    position:absolute;
+    left:5%;
+    top:30%;
+    font-size: 2vw;
     font-family: 'Open Sans', sans-serif;
     font-weight: bold;
     color:#287042;
   }
   .headerimg{
-    position:fixed;
-    width:430px;
-    height:110px;
-    top:0;
-    left:45%;
-    opacity:0.85
+     position:absolute;
+     width:50vh;
+     height:12vh;
+     top:0;
+     left:35%;
+     opacity:0.85
+   }
+  .icon_logo {
+    display:flex;
+    justify-content: space-between;
+    position:absolute;
+    right:2%;
+    top:25%;
+    width:12.5%;
   }
   #warning_icon {
     display: block;
     color: #eae8e8;
-    font-size: 40px;
+    font-size: 5vh;
     transition: all 0.3s ease;
     cursor: pointer;
     padding-bottom: 1px;
@@ -233,7 +260,7 @@
   #changelightness_icon {
     display: block;
     color: #eae8e8;
-    font-size: 40px;
+    font-size: 5vh;
     transition: all 0.3s ease;
     cursor: pointer;
     padding-bottom: 1px;
@@ -245,7 +272,7 @@
   #user_icon {
     display: block;
     color: #eae8e8;
-    font-size: 40px;
+    font-size: 5vh;
     transition: all 0.3s ease;
     cursor: pointer;
     padding-bottom:1px;
@@ -253,18 +280,5 @@
   #user_icon:hover {
     color: #61B087;
     border-bottom:2px solid;
-  }
-  .logopart{
-    display:flex;
-  }
-  .logo {
-    font-size: 26px;
-    font-weight: bold;
-    color:#287042;
-    margin-left: 15px;
-    margin-top: 5px;
-  }
-  .logoimg {
-    width:45px;
   }
 </style>

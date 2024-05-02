@@ -258,86 +258,86 @@ export default {
 }
 #map .ol-zoom {
   display: flex;
-  right: 10%;
+  top:1vh;
+  right: 18vh;
   background-color: rgba(255,255,255,0);
 }
 #map .ol-zoom .ol-zoom-in {
   position: absolute;
-  right: 2.5%;
-  height: 42px;
-  width: 44px;
-  border-radius: 4px;
+  right: 4vh;
+  height: 6vh;
+  width: 6vh;
+  border-radius: 1vh;
 }
 #map .ol-zoom .ol-zoom-out {
   position: absolute;
-  right: 7.5%;
-  height: 42px;
-  width: 44px;
-  border-radius: 4px;
+  right: 12vh;
+  height: 6vh;
+  width: 6vh;
+  border-radius: 1vh;
 }
 .btn-group {
-  margin-top: 11px;
+  top:1vh;
   position: absolute;
-  right: 2%;
+  right: 2vh;
   z-index: 1000;
 }
-
 .btn {
-  height: 40px;
+  height: 6.5vh;
   width: auto;
-  margin-right: 10px;
+  margin-right: 2vh;
   cursor: pointer;
-  padding: 5px 10px;
+  padding: 1vh 1vh;
   background-color: #3ea164;
   color: #e1e0e0;
   border: none;
-  border-radius: 3px;
+  border-radius: 1vh;
   font-weight: bold;
-  font-size: 15px;
+  font-size: 2vh;
 }
 .btn:hover {
   background-color: #cdeec2;
-  color: #262525;
+  color: #676666 !important;
 }
 #legend {
-  height: 250px;
-  width: 200px;
+  height: 35vh;
+  width: 25vh;
   background-color: #c6debd;
   position: absolute;
-  bottom: 1%;
-  right: 1%;
-  opacity: 80%;
+  bottom: 0;
+  right: 0;
+  opacity: 0.8;
   z-index: 1000;
   flex-direction: column;
-  border-radius: 10px;
+  border-radius: 1vh;
 }
 .legend-title {
   color:#1c1c1c;
   font-weight:bold;
-  font-size: 22px;
-  margin: 10px;
-  padding-left: 70px
+  font-size: 3.2vh;
+  margin-top: 2vh;
+  padding-left: 10vh;
 }
 .legend-item {
   display: flex;
   align-items: center;
-  padding-left: 10px;
-  margin-bottom: 10px;
+  padding-left: 2vh;
+  margin-bottom: 1vh;
   img {
-    margin-right: 10px;
+    margin-right: 1vh;
   }
   h3 {
-    font-size: 18px;
+    font-size: 2.5vh;
     font-weight: bold;
     color: #1c1c1c;
   }
 }
 .select {
-  height: 40px;
-  margin-top: 11px;
+  top: 2vh;
   display: flex;
-  left: 10px;
+  left: 1%;
   position: absolute;
+  width:50vh;
   z-index: 1000;
 }
 .ol-popup {
@@ -347,7 +347,7 @@ export default {
   font-weight: bold;
   color: #4f4e4e;
   background-color: #e3e1d5;
-  border-radius: 10px;
+  border-radius: 1vh;
   border: 1px solid #cccccc;
   bottom: -20px;
   left: -50px;

@@ -70,12 +70,12 @@ export default {
 </script>
 <style>
 td.TableSize {
-  font-size:19px;
+  font-size:1.1vw;
   font-weight: bold;
   color: #737272;
 }
 th.TableSize {
-  font-size:19px;
+  font-size:1.25vw;
   font-weight: bold;
   color: #737272!important;
 }
@@ -88,13 +88,13 @@ th.TableSize {
   background-color: #4CAF50; /* 绿色背景 */
   color: #fffefe; /* 白色文字 */
   border: none; /* 无边框 */
-  padding: 8px 16px; /* 内边距 */
+  padding: 1vh 2vw; /* 内边距 */
   text-align: center; /* 文字居中 */
   text-decoration: none; /* 无下划线 */
-  font-size: 16px; /* 文字大小 */
-  margin: 4px 2px; /* 外边距 */
+  font-size: 1.1vw; /* 文字大小 */
+  margin: 0.5vh 0.5vw; /* 外边距 */
   cursor: pointer; /* 鼠标指针为手形 */
-  border-radius: 5px; /* 圆角边框 */
+  border-radius: 1vh; /* 圆角边框 */
   font-weight: bold;
 }
 .detail-button:hover {

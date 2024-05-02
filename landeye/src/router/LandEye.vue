@@ -96,22 +96,21 @@ header {
   height: 90%;
 }
 .website_name {
-  position:fixed;
-  right:8%;
+  position:absolute;
+  right:10%;
   top:2%;
-  font-size: 30px;
+  font-size: 2vw;
   font-family: 'Open Sans', sans-serif;
   font-weight: bold;
   color:#287042;
 }
 .headerimg{
-  position:fixed;
-  width:430px;
-  height:105px;
+  position:absolute;
+  width:50vh;
+  height:12vh;
   top:0;
-  left:40%;
-  opacity:0.85;
-  z-index:1000
+  left:35%;
+  opacity:0.85
 }
 .left {
   display: flex;
