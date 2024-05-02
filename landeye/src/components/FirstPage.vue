@@ -143,23 +143,6 @@ export default {
       })
     }
 
-   /* function addWarningFeature(points) {
-      const warningStyle = new Style({
-        image: new Icon({
-          src: '/img/warning.png',
-          anchor: [0.5, 1],
-        })
-      })
-      points.forEach(coordinates => {
-        const pointGeometry = new Point(fromLonLat(coordinates, 'EPSG:4326'));
-        const pointFeature = new Feature({
-          geometry: pointGeometry,
-        })
-        pointFeature.setStyle(warningStyle)
-        warningSource.addFeature(pointFeature)
-      })
-    }*/
-
     async function fetchData() {
       const warningStyle = new Style({
         image: new Icon({
